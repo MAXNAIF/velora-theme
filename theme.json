@@ -1,0 +1,281 @@
+{
+  "name": "Velora",
+  "displayName": "ÙÙÙÙØ±Ø§",
+  "description": "Ø«ÙÙ ÙØ®Ù ÙÙÙÙØªØ¬Ø§Øª Ø§ÙØ±ÙÙÙØ© Ø¨Ø£ÙÙØ§Ù Ø³ÙØ¯Ø§Ø¡ ÙØ°ÙØ¨ÙØ©",
+  "displayDescription": "Luxury dark/gold theme for digital products",
+  "version": "1.0.0",
+  "author": "Naif",
+  "authorUrl": "https://salla.sa",
+  "license": "MIT",
+  "preview": "https://example.com/preview.jpg",
+  "thumbnail": "https://example.com/thumbnail.jpg",
+  "type": "digital_products",
+  "tags": ["digital", "luxury", "dark-mode", "modern"],
+  "compatibility": {
+    "minVersion": "1.0.0",
+    "maxVersion": "latest"
+  },
+  "settings": {
+    "general": {
+      "primary_color": {
+        "type": "color",
+        "default": "#C9A84C",
+        "label": "Ø§ÙÙÙÙ Ø§ÙØ±Ø¦ÙØ³Ù",
+        "displayLabel": "Primary Color"
+      },
+      "dark_bg_color": {
+        "type": "color",
+        "default": "#0A0A0F",
+        "label": "ÙÙÙ Ø®ÙÙÙØ© Ø§ÙØ¸ÙØ§Ù",
+        "displayLabel": "Dark Background"
+      },
+      "card_color": {
+        "type": "color",
+        "default": "#12121A",
+        "label": "ÙÙÙ Ø§ÙÙØ±ÙØª",
+        "displayLabel": "Card Color"
+      },
+      "text_color": {
+        "type": "color",
+        "default": "#FFFFFF",
+        "label": "ÙÙÙ Ø§ÙÙØµ",
+        "displayLabel": "Text Color"
+      }
+    },
+    "header": {
+      "enable_header": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø±Ø£Ø³ Ø§ÙØµÙØ­Ø©",
+        "displayLabel": "Show Header"
+      },
+      "sticky_header": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¬Ø¹Ù Ø±Ø£Ø³ Ø§ÙØµÙØ­Ø© ÙØ§ØµÙØ§Ù",
+        "displayLabel": "Sticky Header"
+      },
+      "header_transparency": {
+        "type": "number",
+        "default": 0.7,
+        "min": 0,
+        "max": 1,
+        "step": 0.1,
+        "label": "Ø´ÙØ§ÙÙØ© Ø±Ø£Ø³ Ø§ÙØµÙØ­Ø©",
+        "displayLabel": "Header Transparency"
+      },
+      "show_search": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø¨Ø­Ø«",
+        "displayLabel": "Show Search"
+      },
+      "show_cart": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø§ÙØ³ÙØ©",
+        "displayLabel": "Show Cart"
+      }
+    },
+    "hero": {
+      "show_hero": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± ÙØ³Ù Ø§ÙØ¨Ø·Ù",
+        "displayLabel": "Show Hero Section"
+      },
+      "hero_title": {
+        "type": "text",
+        "default": "Ø§Ø±ØªÙÙ Ø¨ÙÙØ§Ø±Ø§ØªÙ ÙØ¹ Ø£ÙØ¶Ù Ø§ÙÙÙØªØ¬Ø§Øª Ø§ÙØ±ÙÙÙØ©",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙØ¨Ø·Ù",
+        "displayLabel": "Hero Title"
+      },
+      "hero_subtitle": {
+        "type": "textarea",
+        "default": "Ø§ÙØªØ´Ù ÙØ¬ÙÙØ¹ØªÙØ§ Ø§ÙÙÙÙØ²Ø© ÙÙ Ø§ÙØ¯ÙØ±Ø§Øª ÙØ§ÙÙÙØ§ÙØ¨ ÙØ§ÙØ£Ø¯ÙØ§Øª Ø§ÙØ±ÙÙÙØ© Ø§ÙÙØµÙÙØ© ÙÙ",
+        "label": "Ø¹ÙÙØ§Ù ÙØ±Ø¹Ù ÙÙØ¨Ø·Ù",
+        "displayLabel": "Hero Subtitle"
+      },
+      "hero_image": {
+        "type": "image",
+        "label": "ØµÙØ±Ø© Ø§ÙØ¨Ø·Ù",
+        "displayLabel": "Hero Image"
+      },
+      "hero_cta": {
+        "type": "text",
+        "default": "ØªØµÙØ­ Ø§ÙÙÙØªØ¬Ø§Øª",
+        "label": "ÙØµ Ø²Ø± Ø§ÙØ­Ø±ÙØ©",
+        "displayLabel": "CTA Button Text"
+      }
+    },
+    "features": {
+      "show_features": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± ÙØ³Ù Ø§ÙÙÙÙØ²Ø§Øª",
+        "displayLabel": "Show Features Section"
+      },
+      "features_title": {
+        "type": "text",
+        "default": "ÙÙØ§Ø°Ø§ ØªØ®ØªØ§Ø± ÙÙÙÙØ±Ø§Ø",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙÙÙÙØ²Ø§Øª",
+        "displayLabel": "Features Title"
+      },
+      "features_count": {
+        "type": "number",
+        "default": 4,
+        "min": 3,
+        "max": 6,
+        "label": "Ø¹Ø¯Ø¯ Ø§ÙÙÙÙØ²Ø§Øª",
+        "displayLabel": "Number of Features"
+      }
+    },
+    "products": {
+      "featured_products_title": {
+        "type": "text",
+        "default": "Ø§ÙÙÙØªØ¬Ø§Øª Ø§ÙÙÙÙØ²Ø©",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙÙÙØªØ¬Ø§Øª Ø§ÙÙÙÙØ²Ø©",
+        "displayLabel": "Featured Products Title"
+      },
+      "products_per_page": {
+        "type": "number",
+        "default": 12,
+        "min": 6,
+        "max": 24,
+        "label": "Ø§ÙÙÙØªØ¬Ø§Øª ÙÙ ÙÙ ØµÙØ­Ø©",
+        "displayLabel": "Products Per Page"
+      },
+      "featured_products_count": {
+        "type": "number",
+        "default": 8,
+        "min": 4,
+        "max": 16,
+        "label": "Ø¹Ø¯Ø¯ Ø§ÙÙÙØªØ¬Ø§Øª Ø§ÙÙÙÙØ²Ø©",
+        "displayLabel": "Featured Products Count"
+      },
+      "show_product_rating": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø§ÙØªÙÙÙÙØ§Øª",
+        "displayLabel": "Show Product Rating"
+      },
+      "show_product_badges": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø´Ø§Ø±Ø§Øª Ø§ÙÙÙØªØ¬Ø§Øª",
+        "displayLabel": "Show Product Badges"
+      }
+    },
+    "testimonials": {
+      "show_testimonials": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø¢Ø±Ø§Ø¡ Ø§ÙØ¹ÙÙØ§Ø¡",
+        "displayLabel": "Show Testimonials"
+      },
+      "testimonials_title": {
+        "type": "text",
+        "default": "ÙØ§Ø°Ø§ ÙÙÙÙ Ø¹ÙÙØ§Ø¤ÙØ§",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙØ¢Ø±Ø§Ø¡",
+        "displayLabel": "Testimonials Title"
+      },
+      "testimonials_count": {
+        "type": "number",
+        "default": 3,
+        "min": 2,
+        "max": 6,
+        "label": "Ø¹Ø¯Ø¯ Ø§ÙØ¢Ø±Ø§Ø¡",
+        "displayLabel": "Testimonials Count"
+      }
+    },
+    "newsletter": {
+      "show_newsletter": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø§ÙÙØ´Ø±Ø© Ø§ÙØ¨Ø±ÙØ¯ÙØ©",
+        "displayLabel": "Show Newsletter"
+      },
+      "newsletter_title": {
+        "type": "text",
+        "default": "Ø§Ø´ØªØ±Ù ÙÙ Ø§ÙÙØ´Ø±Ø© Ø§ÙØ¨Ø±ÙØ¯ÙØ©",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙÙØ´Ø±Ø©",
+        "displayLabel": "Newsletter Title"
+      },
+      "newsletter_subtitle": {
+        "type": "textarea",
+        "default": "Ø§Ø­ØµÙ Ø¹ÙÙ Ø¢Ø®Ø± Ø§ÙØ¹Ø±ÙØ¶ ÙØ§ÙØªØ­Ø¯ÙØ«Ø§Øª ÙØ¨Ø§Ø´Ø±Ø© Ø¥ÙÙ Ø¨Ø±ÙØ¯Ù Ø§ÙØ¥ÙÙØªØ±ÙÙÙ",
+        "label": "Ø¹ÙÙØ§Ù ÙØ±Ø¹Ù ÙÙÙØ´Ø±Ø©",
+        "displayLabel": "Newsletter Subtitle"
+      }
+    },
+    "blog": {
+      "show_blog": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø§ÙÙØ¯ÙÙØ©",
+        "displayLabel": "Show Blog Section"
+      },
+      "blog_title": {
+        "type": "text",
+        "default": "ÙÙ Ø§ÙÙØ¯ÙÙØ©",
+        "label": "Ø¹ÙÙØ§Ù Ø§ÙÙØ¯ÙÙØ©",
+        "displayLabel": "Blog Title"
+      },
+      "blog_posts_count": {
+        "type": "number",
+        "default": 3,
+        "min": 2,
+        "max": 6,
+        "label": "Ø¹Ø¯Ø¯ ÙÙØ´ÙØ±Ø§Øª Ø§ÙÙØ¯ÙÙØ©",
+        "displayLabel": "Blog Posts Count"
+      }
+    },
+    "footer": {
+      "show_footer": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø§ÙØªØ°ÙÙÙ",
+        "displayLabel": "Show Footer"
+      },
+      "footer_columns": {
+        "type": "number",
+        "default": 4,
+        "min": 2,
+        "max": 4,
+        "label": "Ø£Ø¹ÙØ¯Ø© Ø§ÙØªØ°ÙÙÙ",
+        "displayLabel": "Footer Columns"
+      },
+      "show_payment_methods": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø·Ø±Ù Ø§ÙØ¯ÙØ¹",
+        "displayLabel": "Show Payment Methods"
+      },
+      "show_social_links": {
+        "type": "boolean",
+        "default": true,
+        "label": "Ø¥Ø¸ÙØ§Ø± Ø±ÙØ§Ø¨Ø· Ø§ÙØªÙØ§ØµÙ",
+        "displayLabel": "Show Social Links"
+      }
+    },
+    "animations": {
+      "enable_animations": {
+        "type": "boolean",
+        "default": true,
+        "label": "ØªÙØ¹ÙÙ Ø§ÙØ±Ø³ÙÙ Ø§ÙÙØªØ­Ø±ÙØ©",
+        "displayLabel": "Enable Animations"
+      },
+      "animation_speed": {
+        "type": "select",
+        "options": {
+          "slow": "Ø¨Ø·ÙØ¡",
+          "normal": "Ø¹Ø§Ø¯Ù",
+          "fast": "Ø³Ø±ÙØ¹"
+        },
+        "default": "normal",
+        "label": "Ø³Ø±Ø¹Ø© Ø§ÙØ±Ø³ÙÙ Ø§ÙÙØªØ­Ø±ÙØ©",
+        "displayLabel": "Animation Speed"
+      }
+    }
+  }
+}
