@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="{{ store.locale }}" dir="{{ store.locale == 'ar' ? 'rtl' : 'ltr' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ page.meta_description }}">
+    <meta name="keywords" content="{{ page.meta_keywords }}">
+    <meta property="og:title" content="{{ page.title }}">
+    <meta property="og:description" content="{{ page.meta_description }}">
+    <meta property="og:image" content="{{ store.logo }}">
+    <meta property="og:url" content="{{ request.url }}">
+    <title>{{ page.title }} | {{ store.name }}</title>
+
+    {# Salla Twilight Head - Ø¬ÙÙØ¹ Ø³ÙØ±ÙØ¨ØªØ§Øª ÙÙÙÙØ§Øª Twilight Ø§ÙØ£Ø³Ø§Ø³ÙØ© #}
+    {{ twilight.head() }}
+
+    {# Google Fonts - Ø®Ø· Tajawal Ø§ÙØ§Ø­ØªØ±Ø§ÙÙ ÙÙØ¹Ø±Ø¨ÙØ© #}
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    {# Font Awesome Icons - Ø£ÙÙÙÙØ§Øª Ø§Ø­ØªØ±Ø§ÙÙØ© #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-QDAkCKwIuBRESQd1i2BzHbMIVc6ktlW+V6mask5c4D798JXc8jof8kqobQyTXn0dXjP83I08QT60JFDTRcnotw==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    {# Theme CSS - ÙÙÙ Ø§ÙØªÙØ³ÙÙØ§Øª Ø§ÙØ±Ø¦ÙØ³Ù #}
+    <link rel="stylesheet" href="{{ 'assets/css/app.css' | asset }}">
+
+    {# Customizable CSS Variables - ÙØªØºÙØ±Ø§Øª Ø§ÙØªØ®ØµÙØµ ÙÙØ¹ÙÙÙ #}
+    <style>
+        :root {
+            {# Ø§ÙØ£ÙÙØ§Ù Ø§ÙØ£Ø³Ø§Ø³ÙØ© ÙÙØ«ÙÙ - ÙÙÙÙ ØªØ®ØµÙØµÙØ§ ÙÙ ÙÙØ­Ø© Ø§ÙØ¥Ø¯Ø§Ø±Ø© #}
+            --primary-color: {{ theme.settings.primary_color | default('#C9A84C') }};
+            --primary-light: {{ theme.settings.primary_light | default('#E8D48B') }};
+            --primary-dark: {{ theme.settings.primary_dark | default('#8B7C3E') }};
+
+            {# Ø£ÙÙØ§Ù Ø§ÙØ®ÙÙÙØ© ÙØ§ÙØ¨Ø·Ø§ÙØ§Øª #}
+            --bg-color: {{ theme.settings.bg_color | default('#0A0A0F') }};
+            --card-color: {{ theme.settings.card_color | default('#12121A') }};
+            --card-hover: {{ theme.settings.card_hover | default('#1A1A25') }};
+            --border-color: {{ theme.settings.border_color | default('#1E1E2A') }};
+
+            {# Ø£ÙÙØ§Ù Ø§ÙÙØµÙØµ #}
+            --text-primary: #FFFFFF;
+            --text-secondary: #9CA3AF;
+            --text-muted: #6B7280;
+
+            {# Ø§ÙØ®Ø·ÙØ· ÙØ§ÙÙØ³Ø§ÙØ§Øª #}
+            --font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --radius-xl: 24px;
+            --transition-speed: 0.3s;
+        }
+
+        {# Ø§ÙÙØ¶Ø¹ Ø§ÙÙÙÙÙ Ø§ÙØ§ÙØªØ±Ø§Ø¶Ù ÙÙØ«ÙÙ #}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-family);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="velora-body">
+    {# ØªØ®Ø·Ù Ø¥ÙÙ Ø§ÙÙØ­ØªÙÙ Ø§ÙØ±Ø¦ÙØ³Ù - ÙÙÙ ÙÙÙØµÙÙÙØ© #}
+    <a href="#main-content" class="skip-link">{{ trans('accessibility.skip_to_content', 'Ø§Ø°ÙØ¨ Ø¥ÙÙ Ø§ÙÙØ­ØªÙÙ Ø§ÙØ±Ø¦ÙØ³Ù') }}</a>
+
+    {# ÙÙÙÙ Ø§ÙØ±Ø£Ø³ - ÙØ­ØªÙÙ Ø¹ÙÙ Ø§ÙÙØ§Ø¦ÙØ© Ø§ÙØ¹ÙÙÙØ© ÙØ§ÙØ´Ø¹Ø§Ø± ÙØ§ÙÙØ§Ø¦ÙØ© Ø§ÙØ±Ø¦ÙØ³ÙØ© #}
+    {% include 'components/header.twig' %}
+
+    {# ÙØ§Ø¦ÙØ© Ø§ÙÙØ§ØªÙ Ø§ÙÙØ­ÙÙÙ - ØªØ¸ÙØ± Ø¹ÙØ¯ Ø§ÙØ¶ØºØ· Ø¹ÙÙ Ø§ÙÙØ§ÙØ¨Ø±Ø¬Ø± #}
+    {% include 'partials/mobile-menu.twig' %}
+
+    {# ÙØ§ÙØ°Ø© Ø§ÙØ¨Ø­Ø« - ØªØ¸ÙØ± Ø¹ÙØ¯ Ø§ÙØ¶ØºØ· Ø¹ÙÙ Ø£ÙÙÙÙØ© Ø§ÙØ¨Ø­Ø« #}
+    {% include 'partials/search-overlay.twig' %}
+
+    {# Ø§ÙÙØ­ØªÙÙ Ø§ÙØ±Ø¦ÙØ³Ù - ÙØªØºÙØ± Ø­Ø³Ø¨ Ø§ÙØµÙØ­Ø© #}
+    <main id="main-content" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {# ÙÙÙÙ Ø§ÙØªØ°ÙÙÙ - ÙØ­ØªÙÙ Ø¹ÙÙ Ø§ÙØ±ÙØ§Ø¨Ø· ÙØ§ÙØ§Ø´ØªØ±Ø§Ù ÙØ§ÙØªÙØ§ØµÙ #}
+    {% include 'components/footer.twig' %}
+
+    {# Ø²Ø± Ø§ÙØ¹ÙØ¯Ø© Ø¥ÙÙ Ø§ÙØ£Ø¹ÙÙ - ÙØ¸ÙØ± Ø¹ÙØ¯ Ø§ÙØªÙØ±ÙØ± ÙÙØ£Ø³ÙÙ #}
+    <button id="back-to-top" class="back-to-top" aria-label="{{ trans('accessibility.back_to_top', 'Ø§ÙØ¹ÙØ¯Ø© Ø¥ÙÙ Ø§ÙØ£Ø¹ÙÙ') }}">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    {# Ø³ÙØ±ÙØ¨ØªØ§Øª Twilight Ø§ÙØ¶Ø±ÙØ±ÙØ© - ÙØ¬Ø¨ Ø£Ù ØªÙÙÙ ÙÙ Ø§ÙÙÙØ§ÙØ© #}
+    {{ twilight.footer() }}
+
+    {# JavaScript Ø§ÙØ«ÙÙ - ÙØ­ØªÙÙ Ø¹ÙÙ Ø§ÙØªÙØ§Ø¹ÙØ§Øª ÙØ§ÙÙÙØ²Ø§Øª #}
+    <script src="{{ 'assets/js/app.js' | asset }}"></script>
+
+    {# ÙØµ ÙØ®ÙÙ ÙÙÙØªØºÙØ±Ø§Øª Ø§ÙØ¹Ø§ÙØ© Ø§ÙÙØ³ØªØ®Ø¯ÙØ© ÙÙ JS #}
+    <script>
+        window.themeConfig = {
+            locale: '{{ store.locale }}',
+            isRTL: {{ store.locale == 'ar' ? 'true' : 'false' }},
+            storeName: '{{ store.name }}',
+            cartCount: {{ cart.count | default(0) }}
+        };
+    </script>
+</body>
+</html>
