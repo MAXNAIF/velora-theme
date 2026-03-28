@@ -1,0 +1,91 @@
+{#
+  ÙØ§Ø±Øª Ø§ÙÙÙØªØ¬ - ÙÙØ³ØªØ®Ø¯Ù ÙÙ Ø§ÙØµÙØ­Ø© Ø§ÙØ±Ø¦ÙØ³ÙØ© ÙØµÙØ­Ø© Ø§ÙÙÙØªØ¬Ø§Øª ÙØ§ÙØ¨Ø­Ø«
+  Product Card Component - Used across homepage, products page, and search
+  
+  Ø§ÙÙØªØºÙØ±Ø§Øª Ø§ÙÙØ·ÙÙØ¨Ø©: product
+  Required Variables: product
+#}
+
+<div class="product-card" data-product-id="{{ product.id }}">
+    {# ØµÙØ±Ø© Ø§ÙÙÙØªØ¬ - Product Image #}
+    <div class="product-image-wrapper">
+        <img 
+            src="{{ product.image }}" 
+            alt="{{ product.name }}"
+            class="product-image"
+            loading="lazy"
+        >
+        
+        {# Ø´Ø§Ø±Ø§Øª - Badges #}
+        {% if product.is_bestseller %}
+            <span class="product-badge">Ø§ÙØ£ÙØ«Ø± ÙØ¨ÙØ¹Ø§Ù</span>
+        {% elseif product.is_new %}
+            <span class="product-badge new">Ø¬Ø¯ÙØ¯</span>
+        {% elseif product.discount_percentage %}
+            <span class="product-badge discount">{{ product.discount_percentage }}%</span>
+        {% endif %}
+        
+        {# Ø²Ø± ÙØ§Ø¦ÙØ© Ø§ÙØ±ØºØ¨Ø§Øª - Wishlist Button #}
+        <button 
+            class="product-wishlist" 
+            data-product-id="{{ product.id }}"
+            title="Ø¥Ø¶Ø§ÙØ© ÙÙÙØ§Ø¦ÙØ© Ø§ÙÙÙØ¶ÙØ©"
+            aria-label="Ø¥Ø¶Ø§ÙØ© {{ product.name }} ÙÙÙØ§Ø¦ÙØ© Ø§ÙÙÙØ¶ÙØ©"
+        >
+            â¤ï¸
+        </button>
+    </div>
+    
+    {# ÙØ­ØªÙÙ Ø§ÙÙÙØªØ¬ - Product Body #}
+    <div class="product-body">
+        {# ÙØ¦Ø© Ø§ÙÙÙØªØ¬ - Category #}
+        {% if product.category %}
+            <p class="product-category">{{ product.category }}</p>
+        {% endif %}
+        
+        {# Ø§Ø³Ù Ø§ÙÙÙØªØ¬ - Product Name #}
+        <h3 class="product-name">{{ product.name }}</h3>
+        
+        {# Ø§ÙØªÙÙÙÙ ÙØ§ÙÙØ¬ÙÙ - Rating #}
+        <div class="product-rating">
+            <div class="stars">
+                {% for i in 1..5 %}
+                    {% if i <= product.rating %}
+                        <span class="star">â</span>
+                    {% else %}
+                        <span class="star empty">â</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <span class="rating-count">({{ product.reviews_count }})</span>
+        </div>
+        
+        {# Ø§ÙØ³Ø¹Ø± - Price #}
+        <div class="product-price">
+            {% if product.old_price %}
+                <span class="price-old">{{ product.old_price | currency }}</span>
+            {% endif %}
+            <span>{{ product.price | currency }}</span>
+        </div>
+        
+        {# Ø§ÙØ£Ø²Ø±Ø§Ø± - Action Buttons #}
+        <div class="product-actions">
+            <button 
+                class="btn btn-primary btn-add-cart"
+                data-product-id="{{ product.id }}"
+                type="button"
+                title="Ø¥Ø¶Ø§ÙØ© Ø¥ÙÙ Ø§ÙØ³ÙØ©"
+            >
+                ð Ø£Ø¶Ù ÙÙØ³ÙØ©
+            </button>
+            <button 
+                class="btn btn-outline btn-quick-view"
+                data-product-id="{{ product.id }}"
+                type="button"
+                title="Ø¹Ø±Ø¶ Ø³Ø±ÙØ¹"
+            >
+                ðï¸
+            </button>
+        </div>
+    </div>
+</div>
