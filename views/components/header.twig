@@ -1,0 +1,261 @@
+{# =========================================
+   VELORA THEME - HEADER COMPONENT
+   ÙÙÙÙ Ø§ÙØ±Ø£Ø³ - ÙØ­ØªÙÙ Ø¹ÙÙ ÙØ§Ø¦ÙØ© Ø§ÙØªÙÙÙ ÙØ§ÙØ´Ø¹Ø§Ø± ÙØ§ÙØ¹Ø±Ø¨Ø©
+   ========================================= #}
+
+{# Ø§ÙØ´Ø±ÙØ· Ø§ÙØ¹ÙÙÙ - Ø§ÙØ¥Ø¹ÙØ§ÙØ§Øª ÙØ§ÙØ®ÙØ§Ø±Ø§Øª #}
+<div class="header-topbar">
+    <div class="container mx-auto px-4">
+        <div class="topbar-content flex justify-between items-center py-3">
+            {# Ø¬Ø²Ø¡ Ø§ÙØ¥Ø¹ÙØ§Ù Ø§ÙØ£ÙØ³Ø± #}
+            <div class="topbar-message">
+                <span class="text-sm text-secondary">{{ theme.settings.announcement | default(trans('header.welcome_message', 'ÙØ±Ø­Ø¨Ø§ Ø¨Ù ÙÙ ÙØªØ¬Ø±ÙØ§')) }}</span>
+            </div>
+
+            {# Ø®ÙØ§Ø±Ø§Øª Ø§ÙÙØºØ© ÙØ§ÙØ­Ø³Ø§Ø¨ #}
+            <div class="topbar-actions flex items-center gap-4">
+                {# Ø²Ø± ØªØ¨Ø¯ÙÙ Ø§ÙÙØºØ© #}
+                {% if store.locale == 'ar' %}
+                    <a href="{{ url('/en') }}" class="locale-switcher text-sm hover:text-primary transition">
+                        <i class="fas fa-globe"></i> EN
+                    </a>
+                {% else %}
+                    <a href="{{ url('/ar') }}" class="locale-switcher text-sm hover:text-primary transition">
+                        <i class="fas fa-globe"></i> Ø¹Ø±Ø¨Ù
+                    </a>
+                {% endif %}
+
+                {# Ø±ÙØ§Ø¨Ø· Ø§ÙØ­Ø³Ø§Ø¨ #}
+                {% if customer %}
+                    <div class="customer-menu dropdown">
+                        <button class="dropdown-toggle text-sm hover:text-primary transition" data-toggle="dropdown">
+                            <i class="fas fa-user-circle"></i> {{ customer.name }}
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="{{ route('customer.profile') }}" class="dropdown-item">
+                                {{ trans('header.my_profile', 'Ø­Ø³Ø§Ø¨Ù') }}
+                            </a>
+                            <a href="{{ route('customer.orders') }}" class="dropdown-item">
+                                {{ trans('header.my_orders', 'Ø·ÙØ¨Ø§ØªÙ') }}
+                            </a>
+                            <a href="{{ route('customer.addresses') }}" class="dropdown-item">
+                                {{ trans('header.addresses', 'Ø§ÙØ¹ÙØ§ÙÙÙ') }}
+                            </a>
+                            <a href="{{ route('customer.logout') }}" class="dropdown-item text-danger">
+                                {{ trans('header.logout', 'ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬') }}
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{{ route('customer.login') }}" class="text-sm hover:text-primary transition">
+                        {{ trans('header.login', 'Ø¯Ø®ÙÙ') }}
+                    </a>
+                    <span class="text-muted">/</span>
+                    <a href="{{ route('customer.register') }}" class="text-sm hover:text-primary transition">
+                        {{ trans('header.register', 'ØªØ³Ø¬ÙÙ Ø¬Ø¯ÙØ¯') }}
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{# Ø´Ø±ÙØ· Ø§ÙØ¨Ø­Ø« Ø§ÙØ¹ÙÙÙ - ÙØ­Ø³ÙÙ ÙÙØªØµÙÙÙ Ø§ÙÙØ§Ø®Ø± #}
+<header class="header sticky" id="main-header">
+    <div class="container mx-auto px-4">
+        <div class="header-content py-5 flex items-center justify-between">
+
+            {# Ø§ÙØ´Ø¹Ø§Ø± - Ø§Ø³Ù Ø§ÙÙØªØ¬Ø± Ø£Ù ØµÙØ±Ø© Ø§ÙØ´Ø¹Ø§Ø± #}
+            <div class="header-logo">
+                {% if store.logo %}
+                    <a href="{{ route('home') }}" class="logo-link">
+                        <img src="{{ store.logo }}" alt="{{ store.name }}" class="logo-image" style="max-height: 50px;">
+                    </a>
+                {% else %}
+                    <a href="{{ route('home') }}" class="logo-text text-2xl font-bold text-primary hover:text-light transition">
+                        {{ store.name }}
+                    </a>
+                {% endif %}
+            </div>
+
+            {# Ø§ÙÙØ§Ø¦ÙØ© Ø§ÙØ±Ø¦ÙØ³ÙØ© - ÙØ§Ø¦ÙØ© Ø§ÙØªÙÙÙ #}
+            <nav class="header-nav hidden md:flex items-center gap-1">
+                {% for category in store.categories %}
+                    <div class="nav-item group">
+                        <a href="{{ category.url }}" class="nav-link px-4 py-2 hover:text-primary transition duration-300">
+                            {{ category.name }}
+                        </a>
+                        {# Ø§ÙÙÙØ§Ø¦Ù Ø§ÙÙØ±Ø¹ÙØ© #}
+                        {% if category.children %}
+                            <div class="dropdown-menu absolute hidden group-hover:block bg-card rounded-lg shadow-lg">
+                                {% for subcategory in category.children %}
+                                    <a href="{{ subcategory.url }}" class="dropdown-item px-4 py-2 hover:text-primary transition block">
+                                        {{ subcategory.name }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </nav>
+
+            {# Ø£ÙÙÙÙØ§Øª Ø§ÙØ±Ø£Ø³ - Ø§ÙØ¨Ø­Ø« ÙØ§ÙÙØ§Ø¦ÙØ© Ø§ÙÙÙØ¶ÙØ© ÙØ§ÙØ¹Ø±Ø¨Ø© #}
+            <div class="header-icons flex items-center gap-4">
+                {# Ø£ÙÙÙÙØ© Ø§ÙØ¨Ø­Ø« #}
+                <button class="search-toggle icon-btn" data-toggle="search-overlay" aria-label="{{ trans('header.search', 'Ø¨Ø­Ø«') }}">
+                    <i class="fas fa-search text-lg hover:text-primary transition"></i>
+                </button>
+
+                {# Ø£ÙÙÙÙØ© Ø§ÙÙÙØ¶ÙØ© ÙØ¹ Ø§ÙØ¹Ø¯Ø¯ #}
+                <a href="{{ route('customer.wishlist') }}" class="wishlist-link icon-btn relative" aria-label="{{ trans('header.wishlist', 'Ø§ÙÙÙØ¶ÙØ©') }}">
+                    <i class="fas fa-heart text-lg hover:text-primary transition"></i>
+                    {% if customer and customer.wishlist_count > 0 %}
+                        <span class="absolute -top-2 -right-2 bg-primary text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                            {{ customer.wishlist_count }}
+                        </span>
+                    {% endif %}
+                </a>
+
+                {# Ø£ÙÙÙÙØ© Ø§ÙØ¹Ø±Ø¨Ø© ÙØ¹ Ø§ÙØ¹Ø¯Ø¯ ÙØ§ÙÙØ§Ø¦ÙØ© Ø§ÙÙÙØ³Ø¯ÙØ© #}
+                <div class="cart-menu group relative">
+                    <button class="cart-toggle icon-btn relative" data-toggle="cart-menu" aria-label="{{ trans('header.cart', 'Ø§ÙØ³ÙØ©') }}">
+                        <i class="fas fa-shopping-bag text-lg hover:text-primary transition"></i>
+                        {% if cart.count > 0 %}
+                            <span class="absolute -top-2 -right-2 bg-primary text-black text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                {{ cart.count }}
+                            </span>
+                        {% endif %}
+                    </button>
+
+                    {# ÙØ§Ø¦ÙØ© Ø§ÙØ¹Ø±Ø¨Ø© Ø§ÙÙÙØ³Ø¯ÙØ© #}
+                    <div class="cart-dropdown hidden group-hover:block absolute left-0 bg-card border border-border rounded-lg shadow-2xl p-4 w-80 z-50">
+                        {% if cart.count > 0 %}
+                            <div class="cart-items space-y-3 max-h-64 overflow-y-auto">
+                                {% for item in cart.items %}
+                                    <div class="cart-item flex gap-3 pb-3 border-b border-border">
+                                        <img src="{{ item.image }}" alt="{{ item.name }}" class="w-16 h-16 rounded-lg object-cover">
+                                        <div class="flex-1">
+                                            <h4 class="font-semibold text-sm">{{ item.name }}</h4>
+                                            <p class="text-muted text-xs">{{ item.quantity }}x</p>
+                                            <p class="text-primary font-bold">{{ item.price | currency }}</p>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="cart-footer mt-4 pt-4 border-t border-border space-y-3">
+                                <div class="flex justify-between text-sm">
+                                    <span>{{ trans('header.subtotal', 'Ø§ÙÙØ¬ÙÙØ¹') }}:</span>
+                                    <span class="font-bold text-primary">{{ cart.subtotal | currency }}</span>
+                                </div>
+                                <a href="{{ route('cart') }}" class="block text-center bg-primary text-black py-2 rounded-lg font-semibold hover:bg-light transition">
+                                    {{ trans('header.view_cart', 'Ø¹Ø±Ø¶ Ø§ÙØ³ÙØ©') }}
+                                </a>
+                                <a href="{{ route('checkout') }}" class="block text-center border border-primary text-primary py-2 rounded-lg font-semibold hover:bg-primary hover:text-black transition">
+                                    {{ trans('header.checkout', 'Ø§ÙØ¯ÙØ¹') }}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="empty-cart text-center py-8">
+                                <i class="fas fa-shopping-bag text-4xl text-muted mb-3"></i>
+                                <p class="text-muted">{{ trans('header.empty_cart', 'Ø§ÙØ³ÙØ© ÙØ§Ø±ØºØ©') }}</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {# Ø²Ø± Ø§ÙÙØ§Ø¦ÙØ© Ø§ÙÙØ§ØªÙÙØ© (ÙÙØ¨Ø§ÙÙ ÙÙØ·) #}
+                <button class="mobile-menu-toggle md:hidden icon-btn" data-toggle="mobile-menu" aria-label="{{ trans('header.menu', 'Ø§ÙÙØ§Ø¦ÙØ©') }}">
+                    <i class="fas fa-bars text-lg hover:text-primary transition"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+{# ÙÙØ· Ø§ÙØ±Ø£Ø³ Ø§ÙÙØªÙØ¯Ù #}
+<style>
+    .header {
+        background-color: var(--card-color);
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        z-index: 100;
+    }
+
+    .header.sticky {
+        position: sticky;
+        top: 0;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        backdrop-filter: blur(10px);
+    }
+
+    .header-topbar {
+        background-color: var(--bg-color);
+        border-bottom: 1px solid var(--border-color);
+        font-size: 0.875rem;
+    }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color var(--transition-speed);
+    }
+
+    .icon-btn:hover {
+        color: var(--primary-color);
+    }
+
+    .nav-link {
+        color: var(--text-secondary);
+        position: relative;
+        font-weight: 500;
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        {{ store.locale == 'ar' ? 'right' : 'left' }}: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--primary-color);
+        transition: width var(--transition-speed);
+    }
+
+    .nav-link:hover::after {
+        width: 100%;
+    }
+
+    .dropdown-menu {
+        background-color: var(--card-color);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        min-width: 200px;
+    }
+
+    .dropdown-item {
+        color: var(--text-secondary);
+        transition: color var(--transition-speed), background-color var(--transition-speed);
+    }
+
+    .dropdown-item:hover {
+        color: var(--primary-color);
+        background-color: var(--card-hover);
+    }
+
+    .cart-dropdown {
+        backdrop-filter: blur(10px);
+        background-color: rgba(18, 18, 26, 0.95);
+    }
+
+    @media (max-width: 768px) {
+        .header-nav {
+            display: none;
+        }
+    }
+</style>
