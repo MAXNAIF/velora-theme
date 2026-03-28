@@ -1,0 +1,99 @@
+{#
+  ÙØ§Ø¦ÙØ© Ø§ÙØ¬ÙØ§Ù - Mobile Menu Partial
+  ÙØªÙ Ø¹Ø±Ø¶ÙØ§ Ø¹ÙÙ Ø§ÙØ£Ø¬ÙØ²Ø© Ø§ÙØµØºÙØ±Ø© Ø¹ÙØ¯ Ø§ÙØ¶ØºØ· Ø¹ÙÙ Ø²Ø± Ø§ÙÙØ§Ø¦ÙØ©
+#}
+
+<div class="mobile-menu-overlay"></div>
+
+<nav class="mobile-menu">
+    {# Ø±Ø£Ø³ Ø§ÙÙØ§Ø¦ÙØ© - Menu Header #}
+    <div class="mobile-menu-header">
+        <h2 class="mobile-menu-title">{{ store.name }}</h2>
+        <button class="mobile-menu-close" aria-label="Ø¥ØºÙØ§Ù Ø§ÙÙØ§Ø¦ÙØ©">
+            â
+        </button>
+    </div>
+    
+    {# Ø±ÙØ§Ø¨Ø· Ø§ÙØªÙÙÙ - Navigation Links #}
+    <ul class="mobile-menu-nav">
+        <li>
+            <a href="/" class="mobile-menu-link">Ø§ÙØ±Ø¦ÙØ³ÙØ©</a>
+        </li>
+        <li>
+            <a href="/products" class="mobile-menu-link">Ø§ÙÙÙØªØ¬Ø§Øª</a>
+        </li>
+        <li>
+            <a href="/blog" class="mobile-menu-link">Ø§ÙÙØ¯ÙÙØ©</a>
+        </li>
+        <li>
+            <a href="/about" class="mobile-menu-link">Ø¹Ù Ø§ÙÙØªØ¬Ø±</a>
+        </li>
+        <li>
+            <a href="/contact" class="mobile-menu-link">Ø§ØªØµÙ Ø¨ÙØ§</a>
+        </li>
+    </ul>
+    
+    {# Ø§ÙÙØ¦Ø§Øª - Categories #}
+    {% if categories %}
+        <div class="mobile-menu-categories">
+            <h3 style="margin-bottom: 1rem;">Ø§ÙÙØ¦Ø§Øª</h3>
+            <ul class="mobile-menu-nav">
+                {% for category in categories %}
+                    <li>
+                        <a href="/products?category={{ category.id }}" class="mobile-menu-link">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    
+    {# Ø£Ø²Ø±Ø§Ø± Ø§ÙÙØ³ØªØ®Ø¯Ù - User Actions #}
+    <div class="mobile-menu-footer">
+        {% if user %}
+            <div style="margin-bottom: 1rem;">
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">ÙØ±Ø­Ø¨Ø§ÙØ {{ user.name }}</p>
+                <a href="/account" class="btn btn-secondary" style="width: 100%; margin-bottom: 0.5rem;">
+                    Ø­Ø³Ø§Ø¨Ù
+                </a>
+                <form method="post" action="/logout" style="margin: 0;">
+                    <button type="submit" class="btn btn-outline" style="width: 100%;">
+                        ØªØ³Ø¬ÙÙ Ø§ÙØ®Ø±ÙØ¬
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <a href="/login" class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem; display: block;">
+                Ø¯Ø®ÙÙ
+            </a>
+            <a href="/register" class="btn btn-secondary" style="width: 100%; display: block;">
+                Ø¥ÙØ´Ø§Ø¡ Ø­Ø³Ø§Ø¨
+            </a>
+        {% endif %}
+        
+        {# ÙØ³Ø§Ø¦Ù Ø§ÙØªÙØ§ØµÙ Ø§ÙØ§Ø¬ØªÙØ§Ø¹Ù - Social Media #}
+        {% if store.social_media %}
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--dark-border);">
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">ÙØªØ§Ø¨Ø¹Ø© Ø§ÙÙØªØ¬Ø±</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    {% if store.social_media.facebook %}
+                        <a href="{{ store.social_media.facebook }}" title="ÙÙØ³Ø¨ÙÙ" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">f</span>
+                        </a>
+                    {% endif %}
+                    {% if store.social_media.twitter %}
+                        <a href="{{ store.social_media.twitter }}" title="ØªÙÙØªØ±" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">ð</span>
+                        </a>
+                    {% endif %}
+                    {% if store.social_media.instagram %}
+                        <a href="{{ store.social_media.instagram }}" title="Ø¥ÙØ³ØªØ§Ø¬Ø±Ø§Ù" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">ð·</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</nav>
