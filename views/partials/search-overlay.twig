@@ -1,0 +1,119 @@
+{#
+  Ø´Ø±ÙØ· Ø§ÙØ¨Ø­Ø« - Search Overlay Partial
+  Ø¨Ø­Ø« Ø´Ø§ÙÙ ÙØ¹ Ø§ÙØªØ±Ø§Ø­Ø§Øª ÙØ§ÙÙØªØ§Ø¦Ø¬
+#}
+
+<div class="search-overlay">
+    <div class="search-overlay-content">
+        {# Ø±Ø£Ø³ Ø§ÙØ¨Ø­Ø« - Search Header #}
+        <div class="search-overlay-header">
+            <h2 style="margin: 0;">Ø§ÙØ¨Ø­Ø« ÙÙ Ø§ÙÙØªØ¬Ø±</h2>
+            <button class="search-overlay-close" aria-label="Ø¥ØºÙØ§Ù Ø§ÙØ¨Ø­Ø«">â</button>
+        </div>
+        
+        {# Ø­ÙÙ Ø§ÙØ¨Ø­Ø« - Search Input #}
+        <form class="search-form" method="get" action="/search">
+            <input 
+                type="text"
+                name="q"
+                class="search-input"
+                placeholder="Ø§Ø¨Ø­Ø« Ø¹Ù ÙÙØªØ¬Ø§ØªØ Ø¯ÙØ±Ø§ØªØ ÙØ®Ø¯ÙØ§Øª..."
+                autocomplete="off"
+                aria-label="Ø­ÙÙ Ø§ÙØ¨Ø­Ø«"
+                required
+            >
+        </form>
+        
+        {# Ø§ÙØ§ÙØªØ±Ø§Ø­Ø§Øª - Suggestions #}
+        <div class="search-suggestions" style="margin-top: 2rem;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Ø¹ÙÙÙØ§Øª Ø¨Ø­Ø« Ø´ÙÙØ±Ø©</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem;">
+                <a href="/search?q=Ø¯ÙØ±Ø§Øª&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    Ø¯ÙØ±Ø§Øª ØªØ¯Ø±ÙØ¨ÙØ©
+                </a>
+                <a href="/search?q=ÙÙØ§ÙØ³" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    ÙÙØ§ÙØ¨ Ø¬Ø§ÙØ²Ø©
+                </a>
+                <a href="/search?q=Ø£Ø¯ÙØ§Øª&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    Ø£Ø¯ÙØ§Øª ÙØ³Ø§Ø¹Ø¯Ø©
+                </a>
+                <a href="/search?q=ÙØªØ¨&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    Ø§ÙÙØªØ¨ Ø§ÙØ±ÙÙÙØ©
+                </a>
+                <a href="/search?q=ÙÙØ¨ÙÙØ§Ø±&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    ÙÙØ¨ÙÙØ§Ø±Ø§Øª
+                </a>
+                <a href="/search?q=Ø§Ø³ØªØ´Ø§Ø±Ø§Øª&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    Ø§Ø³ØªØ´Ø§Ø±Ø§Øª
+                </a>
+            </div>
+        </div>
+        
+        {# ÙØªØ§Ø¦Ø¬ Ø§ÙØ¨Ø­Ø« - Search Results #}
+        <div class="search-results" style="margin-top: 2rem; display: none;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">Ø§ÙÙØªØ§Ø¦Ø¬</h3>
+            <div id="search-results-container"></div>
+        </div>
+        
+        {# Ø±Ø³Ø§ÙØ© Ø¹Ø¯Ù Ø§ÙØ¹Ø«ÙØ± - No Results #}
+        <div class="search-empty" style="margin-top: 2rem; display: none; text-align: center;">
+            <p style="color: var(--text-muted);">ÙÙ ÙØªÙ Ø§ÙØ¹Ø«ÙØ± Ø¹ÙÙ ÙØªØ§Ø¦Ø¬. Ø­Ø§ÙÙ Ø§Ø³ØªØ®Ø¯Ø§Ù ÙÙÙØ§Øª ÙØ®ØªÙÙØ©.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .suggestion-item:hover {
+        background: var(--dark-card-hover);
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+</style>
