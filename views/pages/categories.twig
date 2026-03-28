@@ -1,0 +1,90 @@
+{# صفحة الفئات - Categories Listing Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('categories.page_title') ?: 'جميع الفئات' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gold/10 via-dark-bg to-dark-bg overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold rounded-full mix-blend-screen filter blur-3xl opacity-5"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        {# التنقل الهرمي #}
+        <nav class="flex items-center gap-2 text-sm mb-8">
+            <a href="/" class="text-gold hover:text-gold-light transition-colors">
+                {{ trans('breadcrumb.home') ?: 'الرئيسية' }}
+            </a>
+            <span class="text-gray-500">
+                <i class="fas fa-chevron-left"></i>
+            </span>
+            <span class="text-gray-400">{{ trans('categories.page_title') ?: 'جميع الفئات' }}</span>
+        </nav>
+
+        {# العنوان والوصف #}
+        <div class="max-w-3xl">
+            <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                {{ trans('categories.hero_title') ?: 'اكتشف جميع فئاتنا' }}
+            </h1>
+            <p class="text-xl text-gray-300 leading-relaxed">
+                {{ trans('categories.hero_subtitle') ?: 'تصفح جميع الفئات المتاحة واختر ما يناسب احتياجاتك' }}
+            </p>
+        </div>
+    </div>
+</div>
+
+{# === شبكة الفئات Categories Grid === #}
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        {% if categories %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for category in categories %}
+                    <a href="{{ category.url }}" class="group relative overflow-hidden rounded-3xl aspect-square cursor-pointer">
+                        {# الخلفية والحدود #}
+                        <div class="absolute inset-0 bg-dark-card border-2 border-gold/20 group-hover:border-gold transition-all duration-300 rounded-3xl z-0"></div>
+
+                        {# طبقة الرواق المتدرجة #}
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
+
+                        {# رسم التوضيح والمحتوى #}
+                        <div class="absolute inset-0 flex items-center justify-center z-20">
+                            <div class="text-center transform group-hover:scale-110 transition-transform duration-300">
+                                <div class="text-6xl mb-6 animate-bounce">
+                                    {{ category.icon ?? '📁' }}
+                                </div>
+                                <h3 class="text-2xl font-bold text-white mb-2">{{ category.name }}</h3>
+                                <p class="text-gold text-sm font-semibold">
+                                    {{ category.products_count }}
+                                    {{ trans('categories.products') ?: 'منتج' }}
+                                </p>
+                            </div>
+                        </div>
+
+                        {# صورة الفئة اختيارية #}
+                        {% if category.image %}
+                            <div class="absolute inset-0 group-hover:scale-110 transition-transform duration-500 z-0">
+                                <img src="{{ category.image.url }}" alt="{{ category.name }}" class="w-full h-full object-cover">
+                            </div>
+                        {% else %}
+                            <div class="absolute inset-0 bg-gradient-to-br from-gold/5 to-dark-bg z-0"></div>
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            {# حالة عدم وجود فئات #}
+            <div class="text-center py-20">
+                <div class="text-6xl mb-6">🔍</div>
+                <h3 class="text-2xl font-bold text-white mb-3">{{ trans('categories.no_categories') ?: 'لا توجد فئات' }}</h3>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    {{ trans('categories.no_categories_desc') ?: 'نعتذر، لا توجد فئات متاحة حالياً' }}
+                </p>
+                <a href="/" class="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                    {{ trans('categories.back_home') ?: 'العودة للرئيسية' }}
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

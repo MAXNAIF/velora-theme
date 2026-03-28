@@ -1,0 +1,362 @@
+{# =========================================
+   VELORA THEME - FOOTER COMPONENT
+   مكون التذييل - يحتوي على الروابط والاشتراك والتواصل
+   ========================================= #}
+
+<footer class="footer" id="main-footer">
+    {# قسم الاشتراك في النشرة البريدية #}
+    <div class="footer-newsletter bg-gradient-primary py-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto text-center">
+                <h3 class="text-3xl font-bold mb-4">
+                    {{ trans('footer.newsletter_title', 'اشترك في نشرتنا البريدية') }}
+                </h3>
+                <p class="text-secondary mb-8">
+                    {{ trans('footer.newsletter_desc', 'احصل على أحدث العروض والمنتجات الجديدة مباشرة إلى بريدك الإلكتروني') }}
+                </p>
+                <form class="newsletter-form flex gap-2" @submit.prevent="subscribeNewsletter">
+                    <input 
+                        type="email" 
+                        placeholder="{{ trans('footer.email_placeholder', 'بريدك الإلكتروني') }}"
+                        class="flex-1 px-4 py-3 rounded-lg bg-card border border-border focus:outline-none focus:border-primary transition"
+                        required
+                    >
+                    <button type="submit" class="btn btn-primary px-8 py-3 rounded-lg font-semibold hover:bg-light transition">
+                        {{ trans('footer.subscribe', 'اشترك') }}
+                    </button>
+                </form>
+                <p class="text-muted text-xs mt-4">
+                    {{ trans('footer.privacy_notice', 'نحن لا نرسل البريد العشوائي. اقرأ سياسة الخصوصية') }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {# المحتوى الرئيسي للتذييل #}
+    <div class="footer-main bg-card py-16 border-t border-border">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+
+                {# الجزء الأول: معلومات المتجر والوسائل الاجتماعية #}
+                <div class="footer-section">
+                    <div class="mb-6">
+                        {% if store.logo %}
+                            <img src="{{ store.logo }}" alt="{{ store.name }}" class="logo-footer mb-4" style="max-height: 40px;">
+                        {% else %}
+                            <h4 class="text-xl font-bold text-primary mb-4">{{ store.name }}</h4>
+                        {% endif %}
+                        <p class="text-secondary text-sm leading-relaxed">
+                            {{ theme.settings.store_description | default(trans('footer.store_description', 'متجر متخصص في بيع المنتجات الرقمية بجودة عالية وأسعار منافسة')) }}
+                        </p>
+                    </div>
+                    
+                    {# روابط التواصل الاجتماعي #}
+                    <div class="social-links">
+                        <h5 class="text-sm font-semibold mb-4 text-primary">
+                            {{ trans('footer.follow_us', 'تابعنا') }}
+                        </h5>
+                        <div class="flex gap-3">
+                            {% if theme.settings.twitter_url %}
+                                <a href="{{ theme.settings.twitter_url }}" target="_blank" rel="noopener" class="social-icon hover:text-primary transition" aria-label="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            {% endif %}
+                            
+                            {% if theme.settings.instagram_url %}
+                                <a href="{{ theme.settings.instagram_url }}" target="_blank" rel="noopener" class="social-icon hover:text-primary transition" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            {% endif %}
+                            
+                            {% if theme.settings.snapchat_url %}
+                                <a href="{{ theme.settings.snapchat_url }}" target="_blank" rel="noopener" class="social-icon hover:text-primary transition" aria-label="Snapchat">
+                                    <i class="fab fa-snapchat"></i>
+                                </a>
+                            {% endif %}
+                            
+                            {% if theme.settings.tiktok_url %}
+                                <a href="{{ theme.settings.tiktok_url }}" target="_blank" rel="noopener" class="social-icon hover:text-primary transition" aria-label="TikTok">
+                                    <i class="fab fa-tiktok"></i>
+                                </a>
+                            {% endif %}
+                            
+                            {% if theme.settings.youtube_url %}
+                                <a href="{{ theme.settings.youtube_url }}" target="_blank" rel="noopener" class="social-icon hover:text-primary transition" aria-label="YouTube">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                {# الجزء الثاني: الفئات #}
+                <div class="footer-section">
+                    <h4 class="text-lg font-bold mb-6 text-primary">
+                        {{ trans('footer.categories', 'الفئات') }}
+                    </h4>
+                    <ul class="space-y-3">
+                        {% for category in store.categories | slice(0, 5) %}
+                            <li>
+                                <a href="{{ category.url }}" class="text-secondary hover:text-primary transition text-sm">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                        {% if store.categories | length > 5 %}
+                            <li>
+                                <a href="{{ route('products') }}" class="text-primary hover:text-light transition text-sm font-semibold">
+                                    {{ trans('footer.view_all', 'عرض الكل') }}
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+                {# الجزء الثالث: الروابط السريعة #}
+                <div class="footer-section">
+                    <h4 class="text-lg font-bold mb-6 text-primary">
+                        {{ trans('footer.quick_links', 'روابط سريعة') }}
+                    </h4>
+                    <ul class="space-y-3">
+                        <li>
+                            <a href="{{ route('home') }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.home', 'الرئيسية') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.show', {slug: 'about'}) }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.about', 'من نحن') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.show', {slug: 'privacy'}) }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.privacy', 'سياسة الخصوصية') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.show', {slug: 'terms'}) }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.terms', 'شروط الاستخدام') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.show', {slug: 'refund-policy'}) }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.refund_policy', 'سياسة الاسترجاع') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('pages.show', {slug: 'faq'}) }}" class="text-secondary hover:text-primary transition text-sm">
+                                {{ trans('footer.faq', 'الأسئلة الشائعة') }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                {# الجزء الرابع: معلومات التواصل #}
+                <div class="footer-section">
+                    <h4 class="text-lg font-bold mb-6 text-primary">
+                        {{ trans('footer.contact_us', 'تواصل معنا') }}
+                    </h4>
+                    <div class="space-y-4">
+                        {# البريد الإلكتروني #}
+                        {% if store.email %}
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-envelope text-primary mt-1"></i>
+                                <div>
+                                    <p class="text-secondary text-xs">{{ trans('footer.email', 'البريد الإلكتروني') }}</p>
+                                    <a href="mailto:{{ store.email }}" class="text-sm hover:text-primary transition">
+                                        {{ store.email }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# رقم الهاتف #}
+                        {% if store.phone %}
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-phone text-primary mt-1"></i>
+                                <div>
+                                    <p class="text-secondary text-xs">{{ trans('footer.phone', 'الهاتف') }}</p>
+                                    <a href="tel:{{ store.phone }}" class="text-sm hover:text-primary transition">
+                                        {{ store.phone }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# WhatsApp #}
+                        {% if theme.settings.whatsapp_number %}
+                            <div class="flex items-start gap-3">
+                                <i class="fab fa-whatsapp text-primary mt-1"></i>
+                                <div>
+                                    <p class="text-secondary text-xs">{{ trans('footer.whatsapp', 'WhatsApp') }}</p>
+                                    <a href="https://wa.me/{{ theme.settings.whatsapp_number }}" target="_blank" rel="noopener" class="text-sm hover:text-primary transition">
+                                        {{ theme.settings.whatsapp_number }}
+                                    </a>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        {# العنوان #}
+                        {% if store.address %}
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-map-marker-alt text-primary mt-1"></i>
+                                <div>
+                                    <p class="text-secondary text-xs">{{ trans('footer.address', 'العنوان') }}</p>
+                                    <p class="text-sm">{{ store.address }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {# قسم طرق الدفع والشهادات #}
+            <div class="footer-bottom-section border-t border-border pt-12">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                    
+                    {# طرق الدفع #}
+                    {% if theme.settings.show_payment_methods %}
+                        <div>
+                            <h5 class="text-sm font-semibold mb-4 text-primary">
+                                {{ trans('footer.payment_methods', 'طرق الدفع') }}
+                            </h5>
+                            <div class="flex flex-wrap gap-3">
+                                <img src="https://via.placeholder.com/40?text=Mada" alt="Mada" class="payment-icon" title="Mada">
+                                <img src="https://via.placeholder.com/40?text=Visa" alt="Visa" class="payment-icon" title="Visa">
+                                <img src="https://via.placeholder.com/40?text=MC" alt="Mastercard" class="payment-icon" title="Mastercard">
+                                <img src="https://via.placeholder.com/40?text=Apple" alt="Apple Pay" class="payment-icon" title="Apple Pay">
+                                <img src="https://via.placeholder.com/40?text=STC" alt="STC Pay" class="payment-icon" title="STC Pay">
+                                <img src="https://via.placeholder.com/40?text=Tabby" alt="Tabby" class="payment-icon" title="Tabby">
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {# شهادة معروف #}
+                    {% if theme.settings.show_maroof_badge %}
+                        <div class="maroof-badge text-center">
+                            <h5 class="text-sm font-semibold mb-4 text-primary">
+                                {{ trans('footer.trusted_seller', 'متجر موثوق') }}
+                            </h5>
+                            <img src="https://via.placeholder.com/100?text=Maroof" alt="معروف" class="mx-auto" style="max-width: 100px;">
+                        </div>
+                    {% endif %}
+
+                    {# رقم الضريبة #}
+                    {% if store.tax_number %}
+                        <div class="vat-info">
+                            <p class="text-sm text-secondary">
+                                {{ trans('footer.vat_number', 'رقم الضريبة') }}: <span class="text-primary font-semibold">{{ store.tax_number }}</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# شريط التذييل السفلي #}
+    <div class="footer-copyright bg-bg py-6 border-t border-border">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-secondary">
+                <div class="copyright-text">
+                    &copy; {{ "now" | date("Y") }} {{ store.name }}. 
+                    {{ trans('footer.all_rights_reserved', 'جميع الحقوق محفوظة.') }}
+                </div>
+                <div class="powered-by text-xs">
+                    {{ trans('footer.powered_by', 'مدعوم من') }} 
+                    <a href="https://salla.sa" target="_blank" rel="noopener" class="text-primary hover:text-light transition">
+                        Salla
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{# نمط التذييل المتقدم #}
+<style>
+    .footer {
+        background-color: var(--bg-color);
+        color: var(--text-secondary);
+        margin-top: 80px;
+    }
+
+    .footer-newsletter {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: #000;
+    }
+
+    .btn-primary {
+        background-color: #000;
+        color: var(--primary-color);
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all var(--transition-speed);
+    }
+
+    .btn-primary:hover {
+        background-color: var(--card-color);
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+    }
+
+    .footer-section h4,
+    .footer-section h5 {
+        color: var(--primary-color);
+    }
+
+    .footer-section a {
+        transition: color var(--transition-speed);
+    }
+
+    .footer-section a:hover {
+        color: var(--primary-color);
+    }
+
+    .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        background-color: var(--card-hover);
+        border-radius: 50%;
+        color: var(--text-secondary);
+        font-size: 16px;
+        transition: all var(--transition-speed);
+    }
+
+    .social-icon:hover {
+        background-color: var(--primary-color);
+        color: #000;
+    }
+
+    .payment-icon {
+        height: 32px;
+        background-color: var(--card-hover);
+        padding: 4px;
+        border-radius: var(--radius-md);
+        object-fit: contain;
+        border: 1px solid var(--border-color);
+    }
+
+    .newsletter-form input {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #000;
+    }
+
+    .newsletter-form input::placeholder {
+        color: rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 768px) {
+        .footer-main {
+            padding: 32px 16px;
+        }
+
+        .grid {
+            gap: 32px;
+        }
+    }
+</style>

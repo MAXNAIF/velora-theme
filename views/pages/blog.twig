@@ -1,0 +1,181 @@
+{# صفحة المدونة - Blog Listing Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('blog.page_title') ?: 'المدونة' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === بطاقة المقالة المميزة Featured Post Hero === #}
+{% if featured_post %}
+    <section class="relative min-h-96 overflow-hidden rounded-3xl mx-4 sm:mx-6 lg:mx-8 mt-8 mb-12">
+        <img src="{{ featured_post.image.url }}" alt="{{ featured_post.title }}" class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+        <div class="absolute inset-0 bg-gradient-to-t from-dark-bg via-transparent to-transparent"></div>
+
+        <div class="relative z-10 h-full flex items-end p-8">
+            <div class="max-w-3xl">
+                <p class="text-gold text-sm font-semibold mb-3">{{ featured_post.category.name }}</p>
+                <h1 class="text-4xl lg:text-5xl font-bold text-white mb-4 leading-tight">
+                    <a href="{{ featured_post.url }}" class="hover:text-gold transition-colors">
+                        {{ featured_post.title }}
+                    </a>
+                </h1>
+                <p class="text-gray-300 text-lg max-w-2xl mb-6">{{ featured_post.excerpt }}</p>
+
+                <div class="flex items-center gap-6 text-sm text-gray-400">
+                    <span>{{ featured_post.created_at|date('j M Y') }}</span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-user-circle"></i>
+                        {{ featured_post.author.name }}
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-clock"></i>
+                        {{ featured_post.reading_time }} {{ trans('blog.reading_time') ?: 'دقيقة' }}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-12 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-b border-gold/20">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-3">{{ trans('blog.latest_posts') ?: 'آخر المقالات' }}</h2>
+        <p class="text-gray-400">{{ trans('blog.page_subtitle') ?: 'نصائح وحيل وأفكار لتطوير مهاراتك' }}</p>
+    </div>
+</div>
+
+{# === المحتوى الرئيسي Main Content === #}
+<div class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            {# === الشريط الجانبي Sidebar === #}
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 space-y-6">
+
+                    {# بحث المقالات #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-search text-gold"></i>
+                            {{ trans('blog.search') ?: 'بحث' }}
+                        </h3>
+                        <input type="text" placeholder="{{ trans('blog.search_placeholder') ?: 'ابحث عن مقالة...' }}" class="w-full bg-dark-bg border border-gold/30 rounded-lg text-gray-300 placeholder-gray-500 px-4 py-3 focus:border-gold transition-colors">
+                    </div>
+
+                    {# فئات المدونة #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-folder text-gold"></i>
+                            {{ trans('blog.categories') ?: 'الفئات' }}
+                        </h3>
+                        <div class="space-y-3">
+                            {% for category in blog.categories %}
+                                <a href="{{ category.url }}" class="flex items-center justify-between p-3 rounded-lg bg-dark-bg hover:bg-dark-bg/80 group transition-colors">
+                                    <span class="text-gray-300 group-hover:text-gold transition-colors">{{ category.name }}</span>
+                                    <span class="text-gold text-sm">{{ category.posts_count }}</span>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# المقالات المشهورة #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-fire text-gold"></i>
+                            {{ trans('blog.popular_posts') ?: 'المشهورة' }}
+                        </h3>
+                        <div class="space-y-4">
+                            {% for post in blog.popular_posts|slice(0, 5) %}
+                                <a href="{{ post.url }}" class="group block">
+                                    <h4 class="text-sm font-semibold text-gray-300 group-hover:text-gold transition-colors line-clamp-2">
+                                        {{ post.title }}
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">{{ post.created_at|date('j M Y') }}</p>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {# === شبكة المقالات Blog Posts Grid === #}
+            <div class="lg:col-span-2">
+                {% if blog.posts %}
+                    <div class="space-y-8">
+                        {% for post in blog.posts %}
+                            <article class="group bg-dark-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-2xl hover:shadow-gold/20 flex flex-col sm:flex-row">
+
+                                {# صورة المقالة #}
+                                <div class="sm:w-64 h-48 sm:h-auto flex-shrink-0 overflow-hidden">
+                                    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                </div>
+
+                                {# محتوى المقالة #}
+                                <div class="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+
+                                    <div>
+                                        <div class="flex items-center gap-3 mb-4">
+                                            <p class="text-gold text-sm font-semibold">{{ post.category.name }}</p>
+                                            <span class="text-gray-500 text-sm">{{ post.created_at|date('j M Y') }}</span>
+                                        </div>
+
+                                        <h3 class="text-2xl font-bold text-white mb-3 line-clamp-2 group-hover:text-gold transition-colors">
+                                            <a href="{{ post.url }}">{{ post.title }}</a>
+                                        </h3>
+
+                                        <p class="text-gray-400 leading-relaxed line-clamp-3">{{ post.excerpt }}</p>
+                                    </div>
+
+                                    <div class="flex items-center justify-between mt-6">
+                                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                                            <span class="flex items-center gap-2">
+                                                <i class="fas fa-user-circle"></i>
+                                                {{ post.author.name }}
+                                            </span>
+                                            <span class="flex items-center gap-2">
+                                                <i class="fas fa-eye"></i>
+                                                {{ post.views }} {{ trans('blog.views') ?: 'قراءة' }}
+                                            </span>
+                                        </div>
+
+                                        <a href="{{ post.url }}" class="inline-flex items-center gap-2 text-gold font-semibold hover:text-gold-light transition-colors">
+                                            {{ trans('blog.read_more') ?: 'اقرأ المزيد' }}
+                                            <i class="fas fa-arrow-left"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    </div>
+
+                    {# الترقيم Pagination #}
+                    <div class="flex justify-center items-center gap-2 mt-12">
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button class="px-4 py-2 bg-gold text-dark-bg rounded-lg font-semibold">1</button>
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">2</button>
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+
+                {% else %}
+
+                    {# حالة عدم وجود مقالات #}
+                    <div class="text-center py-20">
+                        <div class="text-6xl mb-6">📝</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">{{ trans('blog.no_posts') ?: 'لا توجد مقالات' }}</h3>
+                        <p class="text-gray-400">{{ trans('blog.no_posts_desc') ?: 'عاود الزيارة قريباً للمزيد من المقالات' }}</p>
+                    </div>
+
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,179 @@
+{# صفحة نتائج البحث - Search Results Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('search.page_title') ?: 'نتائج البحث' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gold/10 via-dark-bg to-dark-bg overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold rounded-full mix-blend-screen filter blur-3xl opacity-5"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight">
+            {{ trans('search.hero_title') ?: 'نتائج البحث' }}
+        </h1>
+
+        {# شريط البحث المميز #}
+        <div class="flex gap-3 flex-row-reverse max-w-2xl">
+            <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="{{ trans('search.placeholder') ?: 'ابحث عن منتج أو مقالة...' }}"
+                class="flex-1 px-6 py-4 bg-dark-card border-2 border-gold/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-gold transition-colors text-lg"
+            >
+            <button @click="performSearch" class="px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-xl hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                <i class="fas fa-search"></i>
+            </button>
+        </div>
+
+        {# عدد النتائج #}
+        <p class="text-gray-400 mt-6">
+            {{ trans('search.results_count', { count: search_results|length, query: search_query }) ?: 'تم العثور على نتائج' }}
+        </p>
+    </div>
+</div>
+
+{# === نتائج البحث Search Results === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        {% if search_results %}
+
+            {# تصفية النتائج #}
+            <div class="flex gap-3 mb-12 flex-wrap">
+                <button class="px-4 py-2 bg-gold text-dark-bg font-semibold rounded-lg transition-all duration-300">
+                    {{ trans('search.filter_all') ?: 'الكل' }} ({{ search_results|length }})
+                </button>
+                <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                    {{ trans('search.filter_products') ?: 'منتجات' }} ({{ products_count }})
+                </button>
+                <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                    {{ trans('search.filter_blog') ?: 'مقالات' }} ({{ posts_count }})
+                </button>
+            </div>
+
+            {# شبكة النتائج #}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for result in search_results %}
+                    {% if result.type == 'product' %}
+
+                        {# نتيجة منتج #}
+                        <div class="group bg-dark-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-2xl hover:shadow-gold/20">
+
+                            {# صورة المنتج #}
+                            <div class="relative h-48 bg-dark-bg overflow-hidden">
+                                <img src="{{ result.image.url }}" alt="{{ result.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 right-4 px-3 py-1 bg-gold/90 text-dark-bg text-xs font-bold rounded-full">
+                                    {{ trans('search.product') ?: 'منتج' }}
+                                </div>
+                            </div>
+
+                            {# معلومات المنتج #}
+                            <div class="p-6">
+                                <p class="text-gold text-sm font-semibold mb-2">{{ result.category.name }}</p>
+
+                                <h3 class="text-white font-bold text-lg mb-2 line-clamp-2 group-hover:text-gold transition-colors">
+                                    <a href="{{ result.url }}">{{ result.name }}</a>
+                                </h3>
+
+                                {# التقييم والسعر #}
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex gap-1">
+                                        {% for i in 1..5 %}
+                                            <svg class="w-4 h-4 {% if i <= result.rating|round %}text-gold{% else %}text-gray-600{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                            </svg>
+                                        {% endfor %}
+                                    </div>
+                                    <span class="text-gold font-bold">{{ result.price|currency }}</span>
+                                </div>
+
+                                <button @click="addToCart({{ result.id }}, 1)" class="w-full bg-gold text-dark-bg font-bold py-2 rounded-lg hover:bg-gold-dark transition-colors">
+                                    {{ trans('search.add_to_cart') ?: 'أضف للسلة' }}
+                                </button>
+                            </div>
+                        </div>
+
+                    {% else %}
+
+                        {# نتيجة مقالة #}
+                        <a href="{{ result.url }}" class="group bg-dark-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-2xl hover:shadow-gold/20 flex flex-col">
+
+                            {# صورة المقالة #}
+                            <div class="relative h-48 bg-dark-bg overflow-hidden">
+                                <img src="{{ result.image.url }}" alt="{{ result.title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <div class="absolute top-4 right-4 px-3 py-1 bg-gold/90 text-dark-bg text-xs font-bold rounded-full">
+                                    {{ trans('search.article') ?: 'مقالة' }}
+                                </div>
+                            </div>
+
+                            {# محتوى المقالة #}
+                            <div class="p-6 flex-1 flex flex-col justify-between">
+                                <div>
+                                    <p class="text-gold text-sm font-semibold mb-2">{{ result.category.name }}</p>
+                                    <h3 class="text-white font-bold text-lg mb-3 line-clamp-2 group-hover:text-gold transition-colors">
+                                        {{ result.title }}
+                                    </h3>
+                                    <p class="text-gray-400 text-sm line-clamp-2">{{ result.excerpt }}</p>
+                                </div>
+
+                                <div class="flex items-center justify-between mt-4 pt-4 border-t border-gold/20 text-sm text-gray-500">
+                                    <span>{{ result.created_at|date('j M Y') }}</span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-eye"></i>
+                                        {{ result.views }}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            {# الترقيم #}
+            {% if total_pages > 1 %}
+                <div class="flex justify-center items-center gap-2 mt-12">
+                    <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    {% for page in 1..total_pages %}
+                        <button class="px-4 py-2 {% if page == current_page %}bg-gold text-dark-bg{% else %}bg-dark-card border border-gold/20 text-gold hover:bg-gold/10{% endif %} rounded-lg font-semibold transition-colors">
+                            {{ page }}
+                        </button>
+                    {% endfor %}
+                    <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            {% endif %}
+
+        {% else %}
+
+            {# حالة عدم وجود نتائج #}
+            <div class="text-center py-20">
+                <div class="text-8xl mb-8">🔍</div>
+                <h2 class="text-3xl font-bold text-white mb-4">{{ trans('search.no_results_title') ?: 'لم نجد نتائج' }}</h2>
+                <p class="text-gray-400 text-lg mb-8 max-w-2xl mx-auto">
+                    {{ trans('search.no_results_message') ?: 'عذراً، لم نتمكن من العثور على نتائج لبحثك. يرجى محاولة باستخدام كلمات مختلفة.' }}
+                </p>
+
+                <div class="space-y-4">
+                    <p class="text-gray-500">{{ trans('search.suggestions') ?: 'اقتراحات:' }}</p>
+                    <ul class="text-gray-400 space-y-2 max-w-md mx-auto">
+                        <li>✓ {{ trans('search.suggestion_1') ?: 'تحقق من تدقيق الكلمات' }}</li>
+                        <li>✓ {{ trans('search.suggestion_2') ?: 'حاول استخدام كلمات أقل في البحث' }}</li>
+                        <li>✓ {{ trans('search.suggestion_3') ?: 'استبدل بعض الكلمات بمرادفات' }}</li>
+                    </ul>
+                </div>
+
+                <a href="{{ shop_url }}" class="inline-block mt-8 px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                    {{ trans('search.browse_products') ?: 'استعرض جميع المنتجات' }}
+                </a>
+            </div>
+
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

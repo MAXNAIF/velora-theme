@@ -1,0 +1,91 @@
+{#
+  كارت المنتج - يُستخدم في الصفحة الرئيسية وصفحة المنتجات والبحث
+  Product Card Component - Used across homepage, products page, and search
+  
+  المتغيرات المطلوبة: product
+  Required Variables: product
+#}
+
+<div class="product-card" data-product-id="{{ product.id }}">
+    {# صورة المنتج - Product Image #}
+    <div class="product-image-wrapper">
+        <img 
+            src="{{ product.image }}" 
+            alt="{{ product.name }}"
+            class="product-image"
+            loading="lazy"
+        >
+        
+        {# شارات - Badges #}
+        {% if product.is_bestseller %}
+            <span class="product-badge">الأكثر مبيعاً</span>
+        {% elseif product.is_new %}
+            <span class="product-badge new">جديد</span>
+        {% elseif product.discount_percentage %}
+            <span class="product-badge discount">{{ product.discount_percentage }}%</span>
+        {% endif %}
+        
+        {# زر قائمة الرغبات - Wishlist Button #}
+        <button 
+            class="product-wishlist" 
+            data-product-id="{{ product.id }}"
+            title="إضافة للقائمة المفضلة"
+            aria-label="إضافة {{ product.name }} للقائمة المفضلة"
+        >
+            ❤️
+        </button>
+    </div>
+    
+    {# محتوى المنتج - Product Body #}
+    <div class="product-body">
+        {# فئة المنتج - Category #}
+        {% if product.category %}
+            <p class="product-category">{{ product.category }}</p>
+        {% endif %}
+        
+        {# اسم المنتج - Product Name #}
+        <h3 class="product-name">{{ product.name }}</h3>
+        
+        {# التقييم والنجوم - Rating #}
+        <div class="product-rating">
+            <div class="stars">
+                {% for i in 1..5 %}
+                    {% if i <= product.rating %}
+                        <span class="star">★</span>
+                    {% else %}
+                        <span class="star empty">★</span>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <span class="rating-count">({{ product.reviews_count }})</span>
+        </div>
+        
+        {# السعر - Price #}
+        <div class="product-price">
+            {% if product.old_price %}
+                <span class="price-old">{{ product.old_price | currency }}</span>
+            {% endif %}
+            <span>{{ product.price | currency }}</span>
+        </div>
+        
+        {# الأزرار - Action Buttons #}
+        <div class="product-actions">
+            <button 
+                class="btn btn-primary btn-add-cart"
+                data-product-id="{{ product.id }}"
+                type="button"
+                title="إضافة إلى السلة"
+            >
+                🛒 أضف للسلة
+            </button>
+            <button 
+                class="btn btn-outline btn-quick-view"
+                data-product-id="{{ product.id }}"
+                type="button"
+                title="عرض سريع"
+            >
+                👁️
+            </button>
+        </div>
+    </div>
+</div>

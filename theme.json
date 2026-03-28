@@ -1,0 +1,281 @@
+{
+  "name": "Velora",
+  "displayName": "فيلورا",
+  "description": "ثيم فخم للمنتجات الرقمية بألوان سوداء وذهبية",
+  "displayDescription": "Luxury dark/gold theme for digital products",
+  "version": "1.0.0",
+  "author": "Naif",
+  "authorUrl": "https://salla.sa",
+  "license": "MIT",
+  "preview": "https://example.com/preview.jpg",
+  "thumbnail": "https://example.com/thumbnail.jpg",
+  "type": "digital_products",
+  "tags": ["digital", "luxury", "dark-mode", "modern"],
+  "compatibility": {
+    "minVersion": "1.0.0",
+    "maxVersion": "latest"
+  },
+  "settings": {
+    "general": {
+      "primary_color": {
+        "type": "color",
+        "default": "#C9A84C",
+        "label": "اللون الرئيسي",
+        "displayLabel": "Primary Color"
+      },
+      "dark_bg_color": {
+        "type": "color",
+        "default": "#0A0A0F",
+        "label": "لون خلفية الظلام",
+        "displayLabel": "Dark Background"
+      },
+      "card_color": {
+        "type": "color",
+        "default": "#12121A",
+        "label": "لون الكروت",
+        "displayLabel": "Card Color"
+      },
+      "text_color": {
+        "type": "color",
+        "default": "#FFFFFF",
+        "label": "لون النص",
+        "displayLabel": "Text Color"
+      }
+    },
+    "header": {
+      "enable_header": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار رأس الصفحة",
+        "displayLabel": "Show Header"
+      },
+      "sticky_header": {
+        "type": "boolean",
+        "default": true,
+        "label": "جعل رأس الصفحة لاصقاً",
+        "displayLabel": "Sticky Header"
+      },
+      "header_transparency": {
+        "type": "number",
+        "default": 0.7,
+        "min": 0,
+        "max": 1,
+        "step": 0.1,
+        "label": "شفافية رأس الصفحة",
+        "displayLabel": "Header Transparency"
+      },
+      "show_search": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار بحث",
+        "displayLabel": "Show Search"
+      },
+      "show_cart": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار السلة",
+        "displayLabel": "Show Cart"
+      }
+    },
+    "hero": {
+      "show_hero": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار قسم البطل",
+        "displayLabel": "Show Hero Section"
+      },
+      "hero_title": {
+        "type": "text",
+        "default": "ارتقِ بمهاراتك مع أفضل المنتجات الرقمية",
+        "label": "عنوان البطل",
+        "displayLabel": "Hero Title"
+      },
+      "hero_subtitle": {
+        "type": "textarea",
+        "default": "اكتشف مجموعتنا المميزة من الدورات والقوالب والأدوات الرقمية المصممة لك",
+        "label": "عنوان فرعي للبطل",
+        "displayLabel": "Hero Subtitle"
+      },
+      "hero_image": {
+        "type": "image",
+        "label": "صورة البطل",
+        "displayLabel": "Hero Image"
+      },
+      "hero_cta": {
+        "type": "text",
+        "default": "تصفح المنتجات",
+        "label": "نص زر الحركة",
+        "displayLabel": "CTA Button Text"
+      }
+    },
+    "features": {
+      "show_features": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار قسم المميزات",
+        "displayLabel": "Show Features Section"
+      },
+      "features_title": {
+        "type": "text",
+        "default": "لماذا تختار فيلورا؟",
+        "label": "عنوان المميزات",
+        "displayLabel": "Features Title"
+      },
+      "features_count": {
+        "type": "number",
+        "default": 4,
+        "min": 3,
+        "max": 6,
+        "label": "عدد المميزات",
+        "displayLabel": "Number of Features"
+      }
+    },
+    "products": {
+      "featured_products_title": {
+        "type": "text",
+        "default": "المنتجات المميزة",
+        "label": "عنوان المنتجات المميزة",
+        "displayLabel": "Featured Products Title"
+      },
+      "products_per_page": {
+        "type": "number",
+        "default": 12,
+        "min": 6,
+        "max": 24,
+        "label": "المنتجات في كل صفحة",
+        "displayLabel": "Products Per Page"
+      },
+      "featured_products_count": {
+        "type": "number",
+        "default": 8,
+        "min": 4,
+        "max": 16,
+        "label": "عدد المنتجات المميزة",
+        "displayLabel": "Featured Products Count"
+      },
+      "show_product_rating": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار التقييمات",
+        "displayLabel": "Show Product Rating"
+      },
+      "show_product_badges": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار شارات المنتجات",
+        "displayLabel": "Show Product Badges"
+      }
+    },
+    "testimonials": {
+      "show_testimonials": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار آراء العملاء",
+        "displayLabel": "Show Testimonials"
+      },
+      "testimonials_title": {
+        "type": "text",
+        "default": "ماذا يقول عملاؤنا",
+        "label": "عنوان الآراء",
+        "displayLabel": "Testimonials Title"
+      },
+      "testimonials_count": {
+        "type": "number",
+        "default": 3,
+        "min": 2,
+        "max": 6,
+        "label": "عدد الآراء",
+        "displayLabel": "Testimonials Count"
+      }
+    },
+    "newsletter": {
+      "show_newsletter": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار النشرة البريدية",
+        "displayLabel": "Show Newsletter"
+      },
+      "newsletter_title": {
+        "type": "text",
+        "default": "اشترك في النشرة البريدية",
+        "label": "عنوان النشرة",
+        "displayLabel": "Newsletter Title"
+      },
+      "newsletter_subtitle": {
+        "type": "textarea",
+        "default": "احصل على آخر العروض والتحديثات مباشرة إلى بريدك الإلكتروني",
+        "label": "عنوان فرعي للنشرة",
+        "displayLabel": "Newsletter Subtitle"
+      }
+    },
+    "blog": {
+      "show_blog": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار المدونة",
+        "displayLabel": "Show Blog Section"
+      },
+      "blog_title": {
+        "type": "text",
+        "default": "من المدونة",
+        "label": "عنوان المدونة",
+        "displayLabel": "Blog Title"
+      },
+      "blog_posts_count": {
+        "type": "number",
+        "default": 3,
+        "min": 2,
+        "max": 6,
+        "label": "عدد منشورات المدونة",
+        "displayLabel": "Blog Posts Count"
+      }
+    },
+    "footer": {
+      "show_footer": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار التذييل",
+        "displayLabel": "Show Footer"
+      },
+      "footer_columns": {
+        "type": "number",
+        "default": 4,
+        "min": 2,
+        "max": 4,
+        "label": "أعمدة التذييل",
+        "displayLabel": "Footer Columns"
+      },
+      "show_payment_methods": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار طرق الدفع",
+        "displayLabel": "Show Payment Methods"
+      },
+      "show_social_links": {
+        "type": "boolean",
+        "default": true,
+        "label": "إظهار روابط التواصل",
+        "displayLabel": "Show Social Links"
+      }
+    },
+    "animations": {
+      "enable_animations": {
+        "type": "boolean",
+        "default": true,
+        "label": "تفعيل الرسوم المتحركة",
+        "displayLabel": "Enable Animations"
+      },
+      "animation_speed": {
+        "type": "select",
+        "options": {
+          "slow": "بطيء",
+          "normal": "عادي",
+          "fast": "سريع"
+        },
+        "default": "normal",
+        "label": "سرعة الرسوم المتحركة",
+        "displayLabel": "Animation Speed"
+      }
+    }
+  }
+}

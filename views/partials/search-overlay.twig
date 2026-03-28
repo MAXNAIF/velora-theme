@@ -1,0 +1,119 @@
+{#
+  شريط البحث - Search Overlay Partial
+  بحث شامل مع اقتراحات والنتائج
+#}
+
+<div class="search-overlay">
+    <div class="search-overlay-content">
+        {# رأس البحث - Search Header #}
+        <div class="search-overlay-header">
+            <h2 style="margin: 0;">البحث في المتجر</h2>
+            <button class="search-overlay-close" aria-label="إغلاق البحث">✕</button>
+        </div>
+        
+        {# حقل البحث - Search Input #}
+        <form class="search-form" method="get" action="/search">
+            <input 
+                type="text"
+                name="q"
+                class="search-input"
+                placeholder="ابحث عن منتجات، دورات، وخدمات..."
+                autocomplete="off"
+                aria-label="حقل البحث"
+                required
+            >
+        </form>
+        
+        {# الاقتراحات - Suggestions #}
+        <div class="search-suggestions" style="margin-top: 2rem;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">عمليات بحث شهيرة</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 0.75rem;">
+                <a href="/search?q=دورات&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    دورات تدريبية
+                </a>
+                <a href="/search?q=قوالس" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    قوالب جاهزة
+                </a>
+                <a href="/search?q=أدوات&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    أدوات مساعدة
+                </a>
+                <a href="/search?q=كتب&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    الكتب الرقمية
+                </a>
+                <a href="/search?q=ويبينار&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    ويبينارات
+                </a>
+                <a href="/search?q=استشارات&quot;" class="suggestion-item" style="
+                    padding: 0.75rem;
+                    background: var(--dark-card);
+                    border: 1px solid var(--dark-border);
+                    border-radius: 8px;
+                    text-align: center;
+                    transition: var(--transition-fast);
+                    display: block;
+                ">
+                    استشارات
+                </a>
+            </div>
+        </div>
+        
+        {# نتائج البحث - Search Results #}
+        <div class="search-results" style="margin-top: 2rem; display: none;">
+            <h3 style="font-size: 1rem; margin-bottom: 1rem; color: var(--text-secondary);">النتائج</h3>
+            <div id="search-results-container"></div>
+        </div>
+        
+        {# رسالة عدم العثور - No Results #}
+        <div class="search-empty" style="margin-top: 2rem; display: none; text-align: center;">
+            <p style="color: var(--text-muted);">لم يتم العثور على نتائج. حاول استخدام كلمات مختلفة.</p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .suggestion-item:hover {
+        background: var(--dark-card-hover);
+        border-color: var(--gold);
+        color: var(--gold);
+    }
+</style>

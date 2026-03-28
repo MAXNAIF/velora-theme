@@ -1,0 +1,34 @@
+{
+  "name": "velora",
+  "version": "1.0.0",
+  "author": "Naif",
+  "description": "ثيم فيلورا - ثيم فاخر للمنتجات الرقمية بألوان سوداء وذهبية",
+  "displayName": "فيلورا",
+  "type": "digital_products",
+  "layouts": {
+    "default": "layouts/master.twig"
+  },
+  "pages": {
+    "index": "pages/index.twig",
+    "product": "pages/product.twig",
+    "products": "pages/products.twig",
+    "categories": "pages/categories.twig",
+    "cart": "pages/cart.twig",
+    "blog": "pages/blog.twig",
+    "single-blog": "pages/single-blog.twig",
+    "contact": "pages/contact.twig",
+    "search": "pages/search.twig",
+    "page": "pages/page.twig"
+  },
+  "settings": {
+    "colors": {
+      "primary": "#C9A84C",
+      "background": "#0A0A0F",
+      "card": "#12121A",
+      "text": "#FFFFFF"
+    },
+    "fonts": {
+      "primary": "Tajawal"
+    }
+  }
+}

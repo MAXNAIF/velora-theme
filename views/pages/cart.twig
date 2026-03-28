@@ -1,0 +1,188 @@
+{# صفحة سلة المشتريات - Shopping Cart Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('cart.page_title') ?: 'سلة المشتريات' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-12 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-b border-gold/20">
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-4xl lg:text-5xl font-bold text-white">
+            {{ trans('cart.page_title') ?: 'سلة المشتريات' }}
+        </h1>
+        <p class="text-gray-400 mt-2">
+            {{ trans('cart.page_subtitle') ?: 'استعرض وأكمل عملية الشراء' }}
+        </p>
+    </div>
+</div>
+
+{# === المحتوى الرئيسي Main Content === #}
+<div class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        {% if cart.items %}
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                {# === قائمة عناصر السلة Cart Items List === #}
+                <div class="lg:col-span-2">
+                    <div class="space-y-6">
+                        <h2 class="text-2xl font-bold text-white">
+                            {{ trans('cart.items_count', { count: cart.items|length }) ?: 'العناصر' }}
+                        </h2>
+
+                        {% for item in cart.items %}
+                            <div class="bg-dark-card rounded-2xl p-6 border border-gold/20 flex gap-6">
+
+                                {# صورة العنصر #}
+                                <div class="w-32 h-32 rounded-xl overflow-hidden flex-shrink-0">
+                                    <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="w-full h-full object-cover">
+                                </div>
+
+                                {# معلومات العنصر #}
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-bold text-white mb-2">
+                                        <a href="{{ item.product.url }}" class="hover:text-gold transition-colors">
+                                            {{ item.product.name }}
+                                        </a>
+                                    </h3>
+                                    <p class="text-gold font-semibold mb-4">
+                                        {{ item.product.price|currency }}
+                                    </p>
+
+                                    {# التحكم في الكمية #}
+                                    <div class="flex items-center gap-2 bg-dark-bg rounded-lg w-fit px-2 py-2">
+                                        <button @click="decrementQuantity({{ item.id }})" class="text-gold hover:text-gold-light transition-colors p-1">
+                                            <i class="fas fa-minus text-sm"></i>
+                                        </button>
+                                        <input type="number" v-model.number="item.quantity" @change="updateQuantity({{ item.id }})" class="w-12 bg-dark-bg text-white text-center border-0 outline-none">
+                                        <button @click="incrementQuantity({{ item.id }})" class="text-gold hover:text-gold-light transition-colors p-1">
+                                            <i class="fas fa-plus text-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                {# السعر والحذف #}
+                                <div class="flex flex-col items-end justify-between">
+                                    <div class="text-right">
+                                        <p class="text-gray-400 text-sm">{{ trans('cart.subtotal') ?: 'الإجمالي' }}</p>
+                                        <p class="text-2xl font-bold text-gold">
+                                            {{ (item.product.price * item.quantity)|currency }}
+                                        </p>
+                                    </div>
+                                    <button @click="removeFromCart({{ item.id }})" class="text-red-500 hover:text-red-400 transition-colors p-2" title="{{ trans('cart.remove') ?: 'حذف' }}">
+                                        <i class="fas fa-trash-alt text-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                {# === شريط الملخص الجانبي Summary Sidebar === #}
+                <div class="lg:col-span-1">
+                    <div class="sticky top-24 space-y-6">
+
+                        {# بطاقة الملخص #}
+                        <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                            <h3 class="text-xl font-bold text-white mb-6">{{ trans('cart.order_summary') ?: 'ملخص الطلب' }}</h3>
+
+                            <div class="space-y-4 pb-6 border-b border-gold/20">
+                                <div class="flex justify-between text-gray-300">
+                                    <span>{{ trans('cart.subtotal') ?: 'المجموع الفرعي' }}</span>
+                                    <span>{{ cart.subtotal|currency }}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-300">
+                                    <span>{{ trans('cart.shipping') ?: 'الشحن' }}</span>
+                                    <span class="text-gold">{{ cart.shipping|currency }}</span>
+                                </div>
+                                <div class="flex justify-between text-gray-300">
+                                    <span>{{ trans('cart.tax') ?: 'الضريبة' }}</span>
+                                    <span>{{ cart.tax|currency }}</span>
+                                </div>
+                            </div>
+
+                            {# الإجمالي #}
+                            <div class="flex justify-between items-center mt-6 mb-6">
+                                <span class="text-lg font-bold text-white">{{ trans('cart.total') ?: 'الإجمالي الكلي' }}</span>
+                                <span class="text-3xl font-bold text-gold">{{ cart.total|currency }}</span>
+                            </div>
+
+                            {# زر الدفع #}
+                            <a href="{{ checkout_url }}" class="block w-full px-6 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-xl text-center hover:shadow-lg hover:shadow-gold/50 transition-all duration-300 mb-4">
+                                {{ trans('cart.checkout') ?: 'متابعة الدفع' }}
+                            </a>
+
+                            {# زر العودة للتسوق #}
+                            <a href="{{ shop_url }}" class="block w-full px-6 py-3 border-2 border-gold/50 text-gold font-semibold rounded-xl text-center hover:bg-gold/10 transition-colors">
+                                {{ trans('cart.continue_shopping') ?: 'متابعة التسوق' }}
+                            </a>
+                        </div>
+
+                        {# حقل رمز الخصم #}
+                        <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                            <h3 class="text-lg font-bold text-white mb-4">{{ trans('cart.discount_code') ?: 'رمز الخصم' }}</h3>
+                            <div class="flex gap-2">
+                                <input type="text" v-model="discountCode" placeholder="{{ trans('cart.enter_code') ?: 'أدخل رمز' }}" class="flex-1 bg-dark-bg border border-gold/30 rounded-lg text-white placeholder-gray-500 px-4 py-2 focus:border-gold transition-colors">
+                                <button @click="applyDiscount" class="px-6 py-2 bg-gold text-dark-bg font-bold rounded-lg hover:bg-gold-dark transition-colors">
+                                    {{ trans('cart.apply') ?: 'تطبيق' }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            {# === المنتجات ذات الصلة Related Products === #}
+            <div class="mt-16">
+                <h2 class="text-3xl font-bold text-white mb-8">{{ trans('cart.you_might_like') ?: 'قد يعجبك أيضاً' }}</h2>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {% for product in related_products|slice(0, 4) %}
+                        <div class="group bg-dark-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300">
+
+                            {# صورة المنتج #}
+                            <div class="relative h-48 bg-dark-bg overflow-hidden">
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                            </div>
+
+                            {# معلومات المنتج #}
+                            <div class="p-6">
+                                <h3 class="text-white font-bold text-lg mb-2 line-clamp-2 group-hover:text-gold transition-colors">
+                                    <a href="{{ product.url }}">{{ product.name }}</a>
+                                </h3>
+
+                                <div class="flex items-center gap-3 mb-4">
+                                    <span class="text-gold text-xl font-bold">{{ product.price|currency }}</span>
+                                </div>
+
+                                <button @click="addToCart({{ product.id }}, 1)" class="w-full bg-gold text-dark-bg font-bold py-2 rounded-lg hover:bg-gold-dark transition-colors">
+                                    {{ trans('product.add_to_cart') ?: 'أضف' }}
+                                </button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {% else %}
+
+            {# === حالة السلة الفارغة Empty Cart State === #}
+            <div class="max-w-2xl mx-auto text-center py-20">
+                <div class="text-8xl mb-8">🛒</div>
+                <h2 class="text-3xl font-bold text-white mb-4">{{ trans('cart.empty_title') ?: 'سلتك فارغة' }}</h2>
+                <p class="text-gray-400 text-lg mb-8 max-w-lg mx-auto">
+                    {{ trans('cart.empty_message') ?: 'يبدو أنك لم تضف أي منتجات إلى سلتك حتى الآن' }}
+                </p>
+
+                <a href="{{ shop_url }}" class="inline-block px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-xl hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                    {{ trans('cart.continue_shopping') ?: 'ابدأ التسوق الآن' }}
+                </a>
+            </div>
+
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

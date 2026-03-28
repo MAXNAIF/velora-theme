@@ -1,0 +1,211 @@
+{# صفحة المنتجات - Products Listing / Collection Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('products.page_title') ?: 'المنتجات' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-12 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-b border-gold/20">
+    <div class="max-w-7xl mx-auto">
+        {# التنقل الهرمي #}
+        <nav class="flex items-center gap-2 text-sm mb-6">
+            <a href="/" class="text-gold hover:text-gold-light transition-colors">
+                {{ trans('breadcrumb.home') ?: 'الرئيسية' }}
+            </a>
+            <span class="text-gray-500"><i class="fas fa-chevron-left"></i></span>
+            <span class="text-gray-400">{{ trans('products.page_title') ?: 'المنتجات' }}</span>
+        </nav>
+
+        {# العنوان ووصف الصفحة #}
+        <h1 class="text-4xl lg:text-5xl font-bold text-white mb-3">
+            {{ trans('products.hero_title') ?: 'جميع المنتجات' }}
+        </h1>
+        <p class="text-gray-400">
+            {{ trans('products.hero_subtitle') ?: 'اكتشف مجموعتنا الكاملة من المنتجات الرقمية المتميزة' }}
+        </p>
+
+        {# عدد المنتجات #}
+        <div class="mt-6 text-sm text-gray-300">
+            {{ products|length }} {{ trans('products.products_count') ?: 'منتج متاح' }}
+        </div>
+    </div>
+</div>
+
+{# === المحتوى الرئيسي Main Content === #}
+<div class="relative py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+
+            {# === الشريط الجانبي للفلاتر Sidebar Filters === #}
+            <div class="lg:col-span-1">
+                <div class="sticky top-24 space-y-6">
+
+                    {# فلتر الفئات #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-filter text-gold"></i>
+                            {{ trans('products.filters.categories') ?: 'الفئات' }}
+                        </h3>
+                        <div class="space-y-3">
+                            {% for category in categories %}
+                                <label class="flex items-center gap-3 cursor-pointer group">
+                                    <input type="checkbox" class="w-4 h-4 rounded bg-dark-bg border-gold/30 accent-gold">
+                                    <span class="text-gray-300 group-hover:text-gold transition-colors">{{ category.name }}</span>
+                                </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    {# فلتر نطاق السعر #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-money-bill text-gold"></i>
+                            {{ trans('products.filters.price_range') ?: 'نطاق السعر' }}
+                        </h3>
+                        <div class="space-y-2">
+                            <input type="range" min="0" max="1000" class="w-full accent-gold">
+                            <div class="flex justify-between text-sm text-gray-400">
+                                <span>0 {{ trans('currency') ?: 'ر.س' }}</span>
+                                <span>1000+ {{ trans('currency') ?: 'ر.س' }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {# فلتر الترتيب #}
+                    <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                        <h3 class="text-white font-bold text-lg mb-4 flex items-center gap-2">
+                            <i class="fas fa-sort text-gold"></i>
+                            {{ trans('products.filters.sort') ?: 'الترتيب' }}
+                        </h3>
+                        <select class="w-full bg-dark-bg border border-gold/30 rounded-lg text-gray-300 p-2 focus:border-gold transition-colors">
+                            <option>{{ trans('products.sort.newest') ?: 'الأحدث' }}</option>
+                            <option>{{ trans('products.sort.price_low') ?: 'السعر: من الأقل للأعلى' }}</option>
+                            <option>{{ trans('products.sort.price_high') ?: 'السعر: من الأعلى للأقل' }}</option>
+                            <option>{{ trans('products.sort.popular') ?: 'الأكثر شهرة' }}</option>
+                            <option>{{ trans('products.sort.rating') ?: 'التقييم' }}</option>
+                        </select>
+                    </div>
+
+                    {# زر مسح الفلاتر #}
+                    <button class="w-full px-4 py-3 border-2 border-gold/50 text-gold font-semibold rounded-lg hover:bg-gold/10 transition-colors">
+                        {{ trans('products.clear_filters') ?: 'مسح الفلاتر' }}
+                    </button>
+                </div>
+            </div>
+
+            {# === شبكة المنتجات Products Grid === #}
+            <div class="lg:col-span-3">
+                {% if products %}
+
+                    {# أزرار التبديل بين الشبكة والقائمة #}
+                    <div class="flex justify-between items-center mb-8">
+                        <div class="flex gap-2">
+                            <button class="p-2 bg-gold text-dark-bg rounded-lg transition-all duration-300" title="{{ trans('products.grid_view') ?: 'عرض الشبكة' }}">
+                                <i class="fas fa-th text-lg"></i>
+                            </button>
+                            <button class="p-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-all duration-300" title="{{ trans('products.list_view') ?: 'عرض القائمة' }}">
+                                <i class="fas fa-list text-lg"></i>
+                            </button>
+                        </div>
+                        <span class="text-gray-400">{{ products|length }} {{ trans('products.items') ?: 'عنصر' }}</span>
+                    </div>
+
+                    {# شبكة المنتجات #}
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                        {% for product in products %}
+                            <div class="group bg-dark-card rounded-2xl overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-2xl hover:shadow-gold/20">
+
+                                {# صورة المنتج #}
+                                <div class="relative h-48 bg-dark-bg overflow-hidden">
+                                    <img src="{{ product.image.url }}" alt="{{ product.name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+
+                                    {# شارة المنتج #}
+                                    {% if product.is_best_seller %}
+                                        <div class="absolute top-4 right-4 bg-gold text-dark-bg px-4 py-2 rounded-full text-xs font-bold">
+                                            {{ trans('product.bestseller') ?: 'الأفضل مبيعاً' }}
+                                        </div>
+                                    {% elseif product.is_new %}
+                                        <div class="absolute top-4 right-4 bg-gold text-dark-bg px-4 py-2 rounded-full text-xs font-bold">
+                                            {{ trans('product.new') ?: 'جديد' }}
+                                        </div>
+                                    {% endif %}
+
+                                    {# زر القائمة المفضلة #}
+                                    <button class="absolute top-4 left-4 w-10 h-10 bg-dark-bg/80 rounded-full flex items-center justify-center hover:bg-gold transition-colors duration-300">
+                                        <svg class="w-5 h-5 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                {# معلومات المنتج #}
+                                <div class="p-6">
+                                    <p class="text-gold text-sm font-semibold mb-2">{{ product.category.name }}</p>
+
+                                    <h3 class="text-white font-bold text-lg mb-2 line-clamp-2 group-hover:text-gold transition-colors">
+                                        <a href="{{ product.url }}">{{ product.name }}</a>
+                                    </h3>
+
+                                    {# التقييم #}
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <div class="flex gap-1">
+                                            {% for i in 1..5 %}
+                                                <svg class="w-4 h-4 {% if i <= product.rating|round %}text-gold{% else %}text-gray-600{% endif %}" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                                </svg>
+                                            {% endfor %}
+                                        </div>
+                                        <span class="text-gray-400 text-sm">({{ product.reviews_count }})</span>
+                                    </div>
+
+                                    {# السعر #}
+                                    <div class="flex items-center gap-3 mb-6">
+                                        <span class="text-gold text-2xl font-bold">{{ product.price|currency }}</span>
+                                        {% if product.old_price %}
+                                            <span class="text-gray-500 text-sm line-through">{{ product.old_price|currency }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                    {# زر الإضافة إلى السلة #}
+                                    <button @click="addToCart({{ product.id }}, 1)" class="w-full bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold py-2 rounded-lg hover:shadow-lg hover:shadow-gold/50 transform hover:scale-105 transition-all duration-300">
+                                        {{ trans('product.add_to_cart') ?: 'أضف إلى السلة' }}
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {# الترقيم Pagination #}
+                    <div class="flex justify-center items-center gap-2 mt-12">
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button class="px-4 py-2 bg-gold text-dark-bg rounded-lg font-semibold">1</button>
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">2</button>
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">3</button>
+                        <span class="text-gray-400">...</span>
+                        <button class="px-4 py-2 bg-dark-card border border-gold/20 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                    </div>
+
+                {% else %}
+
+                    {# حالة عدم وجود منتجات #}
+                    <div class="text-center py-20">
+                        <div class="text-6xl mb-6">🔍</div>
+                        <h3 class="text-2xl font-bold text-white mb-3">{{ trans('products.no_products') ?: 'لا توجد منتجات' }}</h3>
+                        <p class="text-gray-400 max-w-md mx-auto">
+                            {{ trans('products.no_products_desc') ?: 'نعتذر، لم نتمكن من العثور على منتجات تطابق معاييرك' }}
+                        </p>
+                    </div>
+
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

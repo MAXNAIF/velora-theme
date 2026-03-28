@@ -1,0 +1,44 @@
+{
+  "name": "velora-theme",
+  "version": "1.0.0",
+  "description": "Velora - Luxury dark/gold digital products theme for Salla Twilight",
+  "main": "index.js",
+  "author": "Naif",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tailwindcss -i assets/css/input.css -o assets/css/app.css --watch",
+    "build": "tailwindcss -i assets/css/input.css -o assets/css/app.css --minify",
+    "watch": "tailwindcss -i assets/css/input.css -o assets/css/app.css --watch",
+    "lint": "eslint assets/js/**/*.js",
+    "format": "prettier --write ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.10",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.54.0",
+    "postcss": "^8.4.31",
+    "prettier": "^3.1.0",
+    "tailwindcss": "^3.3.6"
+  },
+  "keywords": [
+    "salla",
+    "theme",
+    "tailwind",
+    "dark-mode",
+    "luxury",
+    "e-commerce",
+    "digital-products",
+    "twilight"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/velora-theme"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/velora-theme/issues"
+  },
+  "homepage": "https://github.com/yourusername/velora-theme"
+}

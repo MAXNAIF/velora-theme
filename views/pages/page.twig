@@ -1,0 +1,241 @@
+{# صفحة عامة - Generic Static Page Template (About Us, Privacy Policy, Terms, etc.) #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ page.title }} - Velora{% endblock %}
+{% block description %}{{ page.excerpt }}{% endblock %}
+
+{% block content %}
+
+{# === التنقل الهرمي Breadcrumb Navigation === #}
+<div class="bg-dark-card/50 border-b border-gold/20 sticky top-24 z-40">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex items-center gap-2 text-sm">
+            <a href="/" class="text-gold hover:text-gold-light transition-colors">
+                {{ trans('breadcrumb.home') ?: 'الرئيسية' }}
+            </a>
+            <span class="text-gray-500"><i class="fas fa-chevron-left"></i></span>
+            <span class="text-gray-400">{{ page.title }}</span>
+        </nav>
+    </div>
+</div>
+
+{# === رأس الصفحة Page Header === #}
+<section class="relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gold/10 via-dark-bg to-dark-bg overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold rounded-full mix-blend-screen filter blur-3xl opacity-5"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+            {{ page.title }}
+        </h1>
+        {% if page.excerpt %}
+            <p class="text-xl text-gray-300 leading-relaxed max-w-3xl">
+                {{ page.excerpt }}
+            </p>
+        {% endif %}
+
+        {# معلومات الصفحة #}
+        <div class="flex items-center gap-6 mt-8 text-sm text-gray-400">
+            <span class="flex items-center gap-2">
+                <i class="fas fa-calendar-alt"></i>
+                {{ page.created_at|date('j F Y') }}
+            </span>
+            {% if page.updated_at %}
+                <span class="flex items-center gap-2">
+                    <i class="fas fa-sync-alt"></i>
+                    {{ trans('page.last_updated') ?: 'آخر تحديث' }}: {{ page.updated_at|date('j F Y') }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{# === محتوى الصفحة Page Content === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+
+        {# محتوى صفحة منسق #}
+        <article class="prose prose-invert max-w-none">
+            <div class="text-gray-300 text-lg leading-relaxed space-y-8">
+
+                {# المحتوى الرئيسي للصفحة #}
+                {{ page.content|raw }}
+
+            </div>
+        </article>
+
+        {# جدول محتويات الصفحة - اختياري #}
+        {% if page.has_table_of_contents %}
+            <div class="mt-12 pt-8 border-t border-gold/20">
+                <h3 class="text-2xl font-bold text-white mb-6">{{ trans('page.table_of_contents') ?: 'محتويات الصفحة' }}</h3>
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                    <ul class="space-y-3">
+                        {% for item in page.table_of_contents %}
+                            <li class="text-gray-300">
+                                <a href="#{{ item.id }}" class="hover:text-gold transition-colors flex items-center gap-2">
+                                    <i class="fas fa-arrow-left text-gold"></i>
+                                    {{ item.title }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{# === صور الصفحة أو المرفقات Page Gallery (Optional) === #}
+{% if page.gallery %}
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-y border-gold/20">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-8">{{ trans('page.gallery') ?: 'المعرض' }}</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for image in page.gallery %}
+                    <a href="{{ image.url }}" class="group relative overflow-hidden rounded-2xl aspect-square cursor-pointer">
+                        <img src="{{ image.url }}" alt="{{ image.alt }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-dark-bg/0 group-hover:bg-dark-bg/20 transition-colors duration-300"></div>
+                        <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="fas fa-magnifying-glass text-gold text-3xl"></i>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{# === الخطوات أو المميزات Optional Steps/Features === #}
+{% if page.features %}
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-8">{{ trans('page.features') ?: 'المميزات' }}</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {% for feature in page.features %}
+                    <div class="bg-dark-card rounded-2xl p-8 border border-gold/20 hover:border-gold/50 transition-all duration-300">
+
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-12 h-12 rounded-full bg-gold/20 flex items-center justify-center flex-shrink-0">
+                                <span class="text-gold font-bold text-lg">{{ loop.index }}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white">{{ feature.title }}</h3>
+                        </div>
+
+                        <p class="text-gray-400 leading-relaxed">{{ feature.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{# === معلومات اضافية Additional Information === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-y border-gold/20">
+    <div class="max-w-4xl mx-auto">
+
+        {# مربع معلومات #}
+        {% if page.info_box %}
+            <div class="bg-dark-bg rounded-2xl p-8 border-l-4 border-gold mb-8">
+                <h3 class="text-xl font-bold text-gold mb-2">{{ page.info_box.title }}</h3>
+                <p class="text-gray-300">{{ page.info_box.content }}</p>
+            </div>
+        {% endif %}
+
+        {# تنبيه اهم #}
+        {% if page.notice %}
+            <div class="bg-red-600/20 border-2 border-red-600/50 rounded-2xl p-8 mb-8">
+                <div class="flex gap-4">
+                    <div class="text-2xl">⚠️</div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-2">{{ page.notice.title }}</h3>
+                        <p class="text-gray-300">{{ page.notice.content }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+
+{# === مقالات ذات صلة Related Pages === #}
+{% if related_pages %}
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-white mb-8">{{ trans('page.related_pages') ?: 'صفحات ذات صلة' }}</h2>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                {% for related in related_pages %}
+                    <a href="{{ related.url }}" class="group bg-dark-card rounded-2xl p-6 border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/20">
+
+                        <div class="flex items-start gap-4">
+                            <div class="text-3xl">📄</div>
+                            <div class="flex-1">
+                                <h3 class="text-lg font-bold text-white mb-2 group-hover:text-gold transition-colors">
+                                    {{ related.title }}
+                                </h3>
+                                <p class="text-gray-400 text-sm line-clamp-2">{{ related.excerpt }}</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 flex items-center justify-between">
+                            <span class="text-gold text-sm font-semibold group-hover:translate-x-2 inline-block transition-transform">
+                                {{ trans('page.read_more') ?: 'اقرأ المزيد' }} →
+                            </span>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{# === زر مشاركة وطباعة Share & Print Buttons === #}
+<section class="py-8 px-4 sm:px-6 lg:px-8 border-t border-gold/20">
+    <div class="max-w-4xl mx-auto">
+        <div class="flex items-center justify-between gap-4">
+
+            {# أزرار المشاركة #}
+            <div class="flex items-center gap-3">
+                <span class="text-gray-400 text-sm">{{ trans('page.share') ?: 'شارك:' }}</span>
+                <button @click="sharePage('twitter')" class="p-2 bg-dark-card border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors" title="{{ trans('page.share_twitter') ?: 'شارك على تويتر' }}">
+                    <i class="fab fa-twitter"></i>
+                </button>
+                <button @click="sharePage('facebook')" class="p-2 bg-dark-card border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors" title="{{ trans('page.share_facebook') ?: 'شارك على فيسبوك' }}">
+                    <i class="fab fa-facebook"></i>
+                </button>
+                <button @click="copyPageLink" class="p-2 bg-dark-card border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors" title="{{ trans('page.copy_link') ?: 'انسخ الرابط' }}">
+                    <i class="fas fa-link"></i>
+                </button>
+            </div>
+
+            {# زر الطباعة #}
+            <button @click="window.print()" class="px-6 py-2 bg-dark-card border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors flex items-center gap-2">
+                <i class="fas fa-print"></i>
+                {{ trans('page.print') ?: 'طباعة' }}
+            </button>
+        </div>
+    </div>
+</section>
+
+{# === نموذج الاتصال CTA Contact CTA === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-gold/10 to-transparent">
+    <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-white mb-4">{{ trans('page.cta_title') ?: 'هل لديك أسئلة؟' }}</h2>
+        <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
+            {{ trans('page.cta_subtitle') ?: 'تواصل معنا، فريقنا جاهز للمساعدة' }}
+        </p>
+
+        <div class="flex gap-4 justify-center flex-wrap">
+            <a href="/contact" class="px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                {{ trans('page.contact_us') ?: 'اتصل بنا' }}
+            </a>
+            <a href="/chat" class="px-8 py-4 border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold/10 transition-colors">
+                {{ trans('page.live_chat') ?: 'دردشة مباشرة' }}
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

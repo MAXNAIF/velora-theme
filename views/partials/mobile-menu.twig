@@ -1,0 +1,99 @@
+{#
+  قائمة الجوال - Mobile Menu Partial
+  يتم عرضها على الأجهزة الصغيرة عند الضغط على زر القائمة
+#}
+
+<div class="mobile-menu-overlay"></div>
+
+<nav class="mobile-menu">
+    {# رأس القائمة - Menu Header #}
+    <div class="mobile-menu-header">
+        <h2 class="mobile-menu-title">{{ store.name }}</h2>
+        <button class="mobile-menu-close" aria-label="إغلاق القائمة">
+            ✕
+        </button>
+    </div>
+    
+    {# روابط التنقل - Navigation Links #}
+    <ul class="mobile-menu-nav">
+        <li>
+            <a href="/" class="mobile-menu-link">الرئيسية</a>
+        </li>
+        <li>
+            <a href="/products" class="mobile-menu-link">المنتجات</a>
+        </li>
+        <li>
+            <a href="/blog" class="mobile-menu-link">المدونة</a>
+        </li>
+        <li>
+            <a href="/about" class="mobile-menu-link">عن المتجر</a>
+        </li>
+        <li>
+            <a href="/contact" class="mobile-menu-link">اتصل بنا</a>
+        </li>
+    </ul>
+    
+    {# الفئات - Categories #}
+    {% if categories %}
+        <div class="mobile-menu-categories">
+            <h3 style="margin-bottom: 1rem;">الفئات</h3>
+            <ul class="mobile-menu-nav">
+                {% for category in categories %}
+                    <li>
+                        <a href="/products?category={{ category.id }}" class="mobile-menu-link">
+                            {{ category.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    
+    {# أزرار المستخدم - User Actions #}
+    <div class="mobile-menu-footer">
+        {% if user %}
+            <div style="margin-bottom: 1rem;">
+                <p style="color: var(--text-secondary); margin-bottom: 0.5rem;">مرحباً، {{ user.name }}</p>
+                <a href="/account" class="btn btn-secondary" style="width: 100%; margin-bottom: 0.5rem;">
+                    حسابي
+                </a>
+                <form method="post" action="/logout" style="margin: 0;">
+                    <button type="submit" class="btn btn-outline" style="width: 100%;">
+                        تسجيل الخروج
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <a href="/login" class="btn btn-primary" style="width: 100%; margin-bottom: 0.5rem; display: block;">
+                دخول
+            </a>
+            <a href="/register" class="btn btn-secondary" style="width: 100%; display: block;">
+                إنشاء حساب
+            </a>
+        {% endif %}
+        
+        {# وسائل التواصل الاجتماعي - Social Media #}
+        {% if store.social_media %}
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--dark-border);">
+                <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0.75rem;">متابعة المتجر</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    {% if store.social_media.facebook %}
+                        <a href="{{ store.social_media.facebook }}" title="فيسبوك" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">f</span>
+                        </a>
+                    {% endif %}
+                    {% if store.social_media.twitter %}
+                        <a href="{{ store.social_media.twitter }}" title="تويتر" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">𝕏</span>
+                        </a>
+                    {% endif %}
+                    {% if store.social_media.instagram %}
+                        <a href="{{ store.social_media.instagram }}" title="إنستاجرام" style="flex: 1;">
+                            <span style="display: block; padding: 0.75rem; background: var(--dark-card-hover); border-radius: 8px; text-align: center;">📷</span>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</nav>

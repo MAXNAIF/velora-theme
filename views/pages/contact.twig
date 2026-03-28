@@ -1,0 +1,224 @@
+{# صفحة الاتصال - Contact Page #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}{{ trans('contact.page_title') ?: 'اتصل بنا' }} - Velora{% endblock %}
+
+{% block content %}
+
+{# === شريط رأس الصفحة Page Header === #}
+<div class="relative py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-gold/10 via-dark-bg to-dark-bg overflow-hidden">
+    <div class="absolute top-0 right-0 w-96 h-96 bg-gold rounded-full mix-blend-screen filter blur-3xl opacity-5"></div>
+
+    <div class="max-w-6xl mx-auto relative z-10">
+        <h1 class="text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+            {{ trans('contact.hero_title') ?: 'تواصل معنا' }}
+        </h1>
+        <p class="text-xl text-gray-300 max-w-3xl">
+            {{ trans('contact.hero_subtitle') ?: 'نحن هنا لمساعدتك. لا تتردد في التواصل معنا بأي استفسار أو تعليق' }}
+        </p>
+    </div>
+</div>
+
+{# === المحتوى الرئيسي Main Content === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+
+            {# === نموذج الاتصال Contact Form === #}
+            <div class="lg:col-span-2">
+                <div class="bg-dark-card rounded-3xl p-8 lg:p-12 border border-gold/20">
+                    <h2 class="text-3xl font-bold text-white mb-8">{{ trans('contact.form_title') ?: 'أرسل لنا رسالتك' }}</h2>
+
+                    <form @submit.prevent="submitContactForm" class="space-y-6">
+
+                        {# الاسم والبريد #}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-white font-semibold mb-2">{{ trans('contact.form_name') ?: 'الاسم الكامل' }} *</label>
+                                <input
+                                    type="text"
+                                    v-model="contactForm.name"
+                                    placeholder="{{ trans('contact.form_name_placeholder') ?: 'أدخل اسمك' }}"
+                                    class="w-full bg-dark-bg border border-gold/30 rounded-lg text-white placeholder-gray-500 px-4 py-3 focus:border-gold transition-colors"
+                                    required
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-white font-semibold mb-2">{{ trans('contact.form_email') ?: 'البريد الإلكتروني' }} *</label>
+                                <input
+                                    type="email"
+                                    v-model="contactForm.email"
+                                    placeholder="{{ trans('contact.form_email_placeholder') ?: 'example@gmail.com' }}"
+                                    class="w-full bg-dark-bg border border-gold/30 rounded-lg text-white placeholder-gray-500 px-4 py-3 focus:border-gold transition-colors"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        {# الهاتف والموضوع #}
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-white font-semibold mb-2">{{ trans('contact.form_phone') ?: 'رقم الهاتف' }}</label>
+                                <input
+                                    type="tel"
+                                    v-model="contactForm.phone"
+                                    placeholder="{{ trans('contact.form_phone_placeholder') ?: '+966 XX XXX XXXX' }}"
+                                    class="w-full bg-dark-bg border border-gold/30 rounded-lg text-white placeholder-gray-500 px-4 py-3 focus:border-gold transition-colors"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-white font-semibold mb-2">{{ trans('contact.form_subject') ?: 'الموضوع' }} *</label>
+                                <select v-model="contactForm.subject" class="w-full bg-dark-bg border border-gold/30 rounded-lg text-white px-4 py-3 focus:border-gold transition-colors" required>
+                                    <option value="">{{ trans('contact.form_subject_placeholder') ?: 'اختر موضوع' }}</option>
+                                    <option value="general">{{ trans('contact.subject_general') ?: 'استفسار عام' }}</option>
+                                    <option value="support">{{ trans('contact.subject_support') ?: 'طلب دعم' }}</option>
+                                    <option value="partnership">{{ trans('contact.subject_partnership') ?: 'شراكة' }}</option>
+                                    <option value="other">{{ trans('contact.subject_other') ?: 'أخرى' }}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        {# الرسالة #}
+                        <div>
+                            <label class="block text-white font-semibold mb-2">{{ trans('contact.form_message') ?: 'الرسالة' }} *</label>
+                            <textarea
+                                v-model="contactForm.message"
+                                placeholder="{{ trans('contact.form_message_placeholder') ?: 'اكتب رسالتك هنا...' }}"
+                                rows="8"
+                                class="w-full bg-dark-bg border border-gold/30 rounded-lg text-white placeholder-gray-500 px-4 py-3 focus:border-gold transition-colors resize-none"
+                                required
+                            ></textarea>
+                        </div>
+
+                        {# الاتفاقية #}
+                        <label class="flex items-center gap-3 text-gray-300">
+                            <input type="checkbox" v-model="contactForm.agree" class="w-4 h-4 rounded bg-dark-bg border-gold/30 accent-gold" required>
+                            <span>{{ trans('contact.form_agree') ?: 'أوافق على سياسة الخصوصية' }}</span>
+                        </label>
+
+                        {# زر الإرسال #}
+                        <button type="submit" class="w-full px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                            {{ trans('contact.form_submit') ?: 'إرسال الرسالة' }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            {# === بطاقات المعلومات Contact Info Cards === #}
+            <div class="lg:col-span-1 space-y-6">
+
+                {# البريد الإلكتروني #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/20">
+                    <div class="text-4xl mb-4">📧</div>
+                    <h3 class="text-white font-bold text-lg mb-2">{{ trans('contact.email') ?: 'البريد الإلكتروني' }}</h3>
+                    <a href="mailto:{{ store.email }}" class="text-gold hover:text-gold-light transition-colors break-all">
+                        {{ store.email }}
+                    </a>
+                </div>
+
+                {# رقم الهاتف #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/20">
+                    <div class="text-4xl mb-4">📞</div>
+                    <h3 class="text-white font-bold text-lg mb-2">{{ trans('contact.phone') ?: 'الهاتف' }}</h3>
+                    <a href="tel:{{ store.phone }}" class="text-gold hover:text-gold-light transition-colors">
+                        {{ store.phone }}
+                    </a>
+                </div>
+
+                {# واتس اب #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/20">
+                    <div class="text-4xl mb-4">💬</div>
+                    <h3 class="text-white font-bold text-lg mb-2">{{ trans('contact.whatsapp') ?: 'واتس اب' }}</h3>
+                    <a href="https://wa.me/{{ store.whatsapp }}" target="_blank" class="text-gold hover:text-gold-light transition-colors">
+                        {{ store.whatsapp }}
+                    </a>
+                </div>
+
+                {# الموقع #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-lg hover:shadow-gold/20">
+                    <div class="text-4xl mb-4">📍</div>
+                    <h3 class="text-white font-bold text-lg mb-2">{{ trans('contact.location') ?: 'الموقع' }}</h3>
+                    <p class="text-gray-300 text-sm">{{ store.address }}</p>
+                </div>
+
+                {# ساعات العمل #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                    <div class="text-4xl mb-4">🕐</div>
+                    <h3 class="text-white font-bold text-lg mb-3">{{ trans('contact.working_hours') ?: 'ساعات العمل' }}</h3>
+                    <div class="space-y-2 text-sm text-gray-300">
+                        <p>{{ trans('contact.hours_weekdays') ?: 'من الاثنين إلى الجمعة: 9 صباحاً - 6 مساءً' }}</p>
+                        <p>{{ trans('contact.hours_saturday') ?: 'السبت: 10 صباحاً - 4 مساءً' }}</p>
+                        <p>{{ trans('contact.hours_sunday') ?: 'الأحد: مغلق' }}</p>
+                    </div>
+                </div>
+
+                {# وسائل التواصل الاجتماعية #}
+                <div class="bg-dark-card rounded-2xl p-6 border border-gold/20">
+                    <h3 class="text-white font-bold text-lg mb-4">{{ trans('contact.social_media') ?: 'تابعنا' }}</h3>
+                    <div class="flex gap-4">
+                        <a href="{{ store.twitter }}" target="_blank" class="p-3 bg-dark-bg border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fab fa-twitter text-lg"></i>
+                        </a>
+                        <a href="{{ store.facebook }}" target="_blank" class="p-3 bg-dark-bg border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fab fa-facebook text-lg"></i>
+                        </a>
+                        <a href="{{ store.instagram }}" target="_blank" class="p-3 bg-dark-bg border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                        <a href="{{ store.linkedin }}" target="_blank" class="p-3 bg-dark-bg border border-gold/30 text-gold rounded-lg hover:bg-gold/10 transition-colors">
+                            <i class="fab fa-linkedin text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{# === قسم الأسئلة الشائعة FAQ Accordion === #}
+<section class="py-16 px-4 sm:px-6 lg:px-8 bg-dark-card/50 border-y border-gold/20">
+    <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold text-white mb-4 text-center">{{ trans('contact.faq_title') ?: 'الأسئلة الشائعة' }}</h2>
+        <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+            {{ trans('contact.faq_subtitle') ?: 'إجابات على الأسئلة الشائعة' }}
+        </p>
+
+        <div class="space-y-4">
+            {% for faq in faqs %}
+                <div class="bg-dark-bg rounded-xl border border-gold/20 overflow-hidden" x-data="{ open: false }">
+
+                    {# رأس السؤال #}
+                    <button @click="open = !open" class="w-full px-6 py-4 flex items-center justify-between hover:bg-dark-card transition-colors group">
+                        <h3 class="text-white font-bold text-lg text-right group-hover:text-gold transition-colors">{{ faq.question }}</h3>
+                        <svg class="w-6 h-6 text-gold transform transition-transform duration-300" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </button>
+
+                    {# محتوى الإجابة #}
+                    <div x-show="open" class="px-6 py-4 bg-dark-bg/50 border-t border-gold/20 text-gray-300">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# === خريطة المتجر Map Section === #}
+{% if store.map_embed %}
+    <section class="py-16 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-4xl font-bold text-white mb-8 text-center">{{ trans('contact.map_title') ?: 'موقعنا على الخريطة' }}</h2>
+
+            <div class="rounded-3xl overflow-hidden border border-gold/20 shadow-2xl shadow-gold/10">
+                {# إدراج الخريطة #}
+                {{ store.map_embed|raw }}
+            </div>
+        </div>
+    </section>
+{% endif %}
+
+{% endblock %}

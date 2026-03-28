@@ -1,0 +1,253 @@
+{# ملف الصفحة الرئيسية - الصفحة الرئيسية مع أقسام البطل والمنتجات المميزة #}
+{% extends "layouts/master.twig" %}
+
+{% block title %}Velora - المتجر الفاخر للمنتجات الرقمية{% endblock %}
+
+{% block content %}
+
+{# === قسم البطل Hero Section === #}
+<section class="relative pt-32 pb-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+    {# خلفية متدرجة #}
+    <div class="absolute inset-0 bg-gradient-to-br from-gold-dark via-dark-bg to-dark-bg opacity-50"></div>
+
+    <div class="relative max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {# محتوى النص #}
+            <div class="space-y-8">
+                {# شارة العنوان #}
+                <div class="inline-block">
+                    <span class="px-4 py-2 rounded-full bg-gold/20 border border-gold/50 text-gold text-sm font-medium">
+                        <i class="fas fa-crown ms-2"></i>منتجات رقمية فاخرة
+                    </span>
+                </div>
+
+                {# العنوان الرئيسي #}
+                <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-light via-gold to-gold-dark">
+                        ارتقِ بمهاراتك
+                    </span>
+                    <br>
+                    مع أفضل المنتجات الرقمية
+                </h1>
+
+                {# الوصف #}
+                <p class="text-lg text-gray-300 leading-relaxed">
+                    اكتشف مجموعة متخصصة من الدورات والقوالب والأدوات الرقمية المصممة لرفع مستواك المهني والشخصي
+                </p>
+
+                {# أزرار الإجراء #}
+                <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                    <a href="#products" class="px-8 py-4 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
+                        <i class="fas fa-shopping-bag ms-2"></i>استكشف المنتجات
+                    </a>
+                    <a href="#features" class="px-8 py-4 border-2 border-gold/50 text-gold hover:border-gold hover:bg-gold/10 rounded-lg transition-all duration-300">
+                        <i class="fas fa-info-circle ms-2"></i>تعرف على المزيد
+                    </a>
+                </div>
+            </div>
+
+            {# بطاقة معاينة المنتج #}
+            <div class="relative h-96 rounded-2xl overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-br from-gold/20 to-dark-border rounded-2xl border-2 border-gold/30 p-8 flex flex-col justify-between">
+                    <div class="space-y-4">
+                        <div class="h-32 bg-gradient-to-br from-gold/30 to-gold/10 rounded-lg animate-pulse"></div>
+                        <div class="h-4 bg-gold/20 rounded w-3/4"></div>
+                        <div class="h-4 bg-gold/20 rounded w-1/2"></div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4">
+                        <span class="text-xl font-bold text-gold">399 ر.س</span>
+                        <button class="px-4 py-2 bg-gold text-dark-bg rounded-lg font-bold hover:shadow-lg hover:shadow-gold/50 transition-all">
+                            <i class="fas fa-plus ms-1"></i>أضف
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === قسم المميزات Features Section === #}
+<section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-card/50">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-light to-gold">لماذا تختار Velora</span>
+            </h2>
+            <p class="text-gray-400 text-lg">نقدم لك الأفضل في كل جوانب التجربة</p>
+        </div>
+
+        {# شبكة المميزات #}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {# مميزة 1: الجودة #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-star text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">جودة عالية</h3>
+                <p class="text-gray-400">منتجات مدقق عليها بعناية من خبراء المجال</p>
+            </div>
+
+            {# مميزة 2: التحميل الفوري #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-bolt text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">تحميل فوري</h3>
+                <p class="text-gray-400">احصل على المنتج مباشرة بعد الدفع</p>
+            </div>
+
+            {# مميزة 3: الدعم #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-headset text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">دعم متخصص</h3>
+                <p class="text-gray-400">فريق الدعم متاح لمساعدتك 24/7</p>
+            </div>
+
+            {# مميزة 4: التحديثات #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-sync text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">تحديثات مجانية</h3>
+                <p class="text-gray-400">احصل على جميع التحديثات الجديدة مجاناً</p>
+            </div>
+
+            {# مميزة 5: الضمان #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-shield-alt text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">ضمان الرضا</h3>
+                <p class="text-gray-400">استرجع أموالك كاملة خلال 30 يوم</p>
+            </div>
+
+            {# مميزة 6: المجتمع #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border hover:border-gold/50 transition-all duration-300 group">
+                <div class="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4 group-hover:bg-gold/30">
+                    <i class="fas fa-users text-gold text-xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-2 text-gold">مجتمع نشط</h3>
+                <p class="text-gray-400">تواصل مع آلاف المتعلمين والمحترفين</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === قسم المنتجات Products Section === #}
+<section id="products" class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-light to-gold">منتجاتنا المتميزة</span>
+            </h2>
+            <p class="text-gray-400 text-lg">اختر من بين مجموعة واسعة من الدورات والمنتجات الرقمية</p>
+        </div>
+
+        {# حلقة عرض المنتجات - Salla Product Loop #}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for product in products %}
+                {# استدعاء مكون بطاقة المنتج #}
+                {% include 'components/product-card.twig' %}
+            {% else %}
+                {# رسالة في حالة عدم وجود منتجات #}
+                <div class="col-span-full text-center py-16">
+                    <i class="fas fa-inbox text-gold/30 text-6xl mb-4 block"></i>
+                    <p class="text-gray-400 text-lg">لم يتم العثور على منتجات</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# === قسم التقييمات Testimonials Section === #}
+<section class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-card/50">
+    <div class="max-w-6xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-bold mb-4">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-gold-light to-gold">آراء عملائنا</span>
+            </h2>
+            <p class="text-gray-400 text-lg">اكتشف ما يقوله المتعلمون عن منتجاتنا</p>
+        </div>
+
+        {# شبكة التقييمات #}
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {# تقييم 1 #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-gold">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-300 mb-4">المنتجات رائعة والدعم متميز، استفدت كثيراً من المحتوى المقدم</p>
+                <p class="font-bold text-gold">أحمد محمد</p>
+                <p class="text-gray-500 text-sm">مطور ويب</p>
+            </div>
+
+            {# تقييم 2 #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-gold">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-300 mb-4">من أفضل المتاجر للمنتجات الرقمية، التصميم فاخر والأسعار مناسبة</p>
+                <p class="font-bold text-gold">فاطمة علي</p>
+                <p class="text-gray-500 text-sm">مصممة جرافيك</p>
+            </div>
+
+            {# تقييم 3 #}
+            <div class="p-6 rounded-xl bg-dark-bg border border-dark-border">
+                <div class="flex items-center mb-4">
+                    <div class="flex text-gold">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                <p class="text-gray-300 mb-4">تجربة تسوق رائعة، سهولة في الاستخدام والخروج السريع</p>
+                <p class="font-bold text-gold">محمد أحمد</p>
+                <p class="text-gray-500 text-sm">رائد أعمال</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# === قسم النشرة الإخبارية Newsletter Section === #}
+<section class="py-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-4xl mx-auto">
+        <div class="p-12 rounded-2xl bg-gradient-to-r from-gold/20 via-dark-card to-dark-bg border-2 border-gold/50 text-center">
+            <h2 class="text-3xl font-bold mb-4">ابق على اطلاع بأحدث العروض</h2>
+            <p class="text-gray-400 mb-8 text-lg">اشترك في نشرتنا البريدية للحصول على عروض حصرية وتحديثات المنتجات</p>
+
+            {# نموذج الاشتراك #}
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletter-form">
+                <input
+                    type="email"
+                    placeholder="أدخل بريدك الإلكتروني"
+                    class="flex-1 px-4 py-3 rounded-lg bg-dark-bg border border-dark-border text-white placeholder-gray-500 focus:border-gold focus:outline-none"
+                    required
+                >
+                <button
+                    type="submit"
+                    class="px-8 py-3 bg-gradient-to-r from-gold to-gold-dark text-dark-bg font-bold rounded-lg hover:shadow-lg hover:shadow-gold/50 transition-all duration-300"
+                >
+                    اشترك الآن
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

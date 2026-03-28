@@ -1,0 +1,291 @@
+/**
+ * Velora Theme - Tailwind CSS Input File
+ * هذا الملف هو نقطة الدخول لـ Tailwind CSS
+ * يتم تحويله إلى app.css عبر أمر: npm run build
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Base Styles ===== */
+@layer base {
+    :root {
+        --gold: #C9A84C;
+        --gold-light: #E8D48B;
+        --gold-dark: #A88B3A;
+        --dark-bg: #0A0A0F;
+        --dark-card: #12121A;
+        --dark-card-hover: #1A1A25;
+        --dark-border: #1E1E2A;
+        --text-primary: #FFFFFF;
+        --text-secondary: #9CA3AF;
+        --text-muted: #6B7280;
+        --gradient-gold: linear-gradient(135deg, #C9A84C, #E8D48B, #C9A84C);
+        --shadow-gold: 0 0 30px rgba(201, 168, 76, 0.15);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --font-primary: 'Tajawal', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+
+    * {
+        @apply box-border m-0 p-0;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+        font-family: var(--font-primary);
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        @apply overflow-x-hidden leading-relaxed;
+    }
+
+    h1 { @apply text-5xl font-bold leading-tight; }
+    h2 { @apply text-4xl font-bold mb-6; }
+    h3 { @apply text-2xl font-semibold mb-4; }
+    h4 { @apply text-xl font-semibold; }
+    h5 { @apply text-lg font-semibold; }
+    h6 { @apply text-base font-semibold; }
+
+    a {
+        color: var(--gold);
+        @apply no-underline transition-all duration-200;
+    }
+
+    a:hover {
+        color: var(--gold-light);
+    }
+
+    img {
+        @apply max-w-full h-auto;
+    }
+
+    input, textarea, select {
+        @apply outline-none;
+    }
+}
+
+/* ===== Component Styles ===== */
+@layer components {
+
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center justify-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 cursor-pointer border-0;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: var(--dark-bg);
+        @apply hover:shadow-lg;
+    }
+
+    .btn-primary:hover {
+        box-shadow: 0 8px 25px rgba(201, 168, 76, 0.4);
+    }
+
+    .btn-outline {
+        border: 2px solid var(--gold);
+        color: var(--gold);
+        background: transparent;
+    }
+
+    .btn-outline:hover {
+        background: rgba(201, 168, 76, 0.1);
+    }
+
+    /* Navbar */
+    .navbar {
+        @apply fixed top-0 left-0 right-0 z-50 transition-all duration-300;
+        background: rgba(10, 10, 15, 0.85);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--dark-border);
+    }
+
+    .navbar.scrolled {
+        background: rgba(10, 10, 15, 0.95);
+        box-shadow: var(--shadow-gold);
+    }
+
+    /* Product Card */
+    .product-card {
+        background: var(--dark-card);
+        border: 1px solid var(--dark-border);
+        @apply rounded-2xl overflow-hidden transition-all duration-300 relative;
+    }
+
+    .product-card:hover {
+        border-color: rgba(201, 168, 76, 0.5);
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .product-image-wrapper {
+        @apply relative overflow-hidden;
+        height: 240px;
+    }
+
+    .product-image {
+        @apply w-full h-full object-cover transition-transform duration-500;
+    }
+
+    .product-card:hover .product-image {
+        transform: scale(1.05);
+    }
+
+    .product-badge {
+        @apply absolute top-3 right-3 px-3 py-1 text-xs font-bold rounded-full;
+        background: var(--gold);
+        color: var(--dark-bg);
+    }
+
+    .product-badge.new {
+        background: var(--accent-green, #10B981);
+        color: white;
+    }
+
+    .product-badge.discount {
+        background: #EF4444;
+        color: white;
+    }
+
+    .product-wishlist {
+        @apply absolute top-3 left-3 w-9 h-9 rounded-full flex items-center justify-center text-sm cursor-pointer transition-all duration-200 border-0;
+        background: rgba(10, 10, 15, 0.8);
+    }
+
+    .product-wishlist:hover {
+        background: rgba(201, 168, 76, 0.2);
+    }
+
+    .product-body {
+        @apply p-5;
+    }
+
+    .product-category {
+        color: var(--gold);
+        @apply text-xs font-semibold uppercase tracking-wider mb-2;
+    }
+
+    .product-name {
+        color: var(--text-primary);
+        @apply text-base font-bold mb-3 leading-snug;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .product-rating {
+        @apply flex items-center gap-2 mb-3;
+    }
+
+    .stars {
+        @apply flex gap-0.5;
+    }
+
+    .star {
+        color: var(--gold);
+        @apply text-sm;
+    }
+
+    .star.empty {
+        color: var(--dark-border);
+    }
+
+    .rating-count {
+        color: var(--text-muted);
+        @apply text-xs;
+    }
+
+    .product-price {
+        @apply flex items-center gap-3 mb-4;
+    }
+
+    .price-old {
+        color: var(--text-muted);
+        @apply text-sm line-through;
+    }
+
+    .product-price span:last-child {
+        color: var(--gold);
+        @apply text-xl font-bold;
+    }
+
+    .product-actions {
+        @apply flex gap-2;
+    }
+
+    .btn-add-cart {
+        @apply flex-1;
+        background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+        color: var(--dark-bg);
+    }
+
+    .btn-quick-view {
+        @apply px-3;
+        border: 1px solid var(--dark-border);
+        color: var(--text-secondary);
+        background: transparent;
+    }
+
+    /* Back to Top */
+    .back-to-top {
+        @apply fixed bottom-8 right-8 w-12 h-12 rounded-full flex items-center justify-center cursor-pointer z-50 transition-all duration-300 border-0;
+        background: var(--gold);
+        color: var(--dark-bg);
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    /* Skip Link */
+    .skip-link {
+        @apply absolute -top-full left-4 px-4 py-2 rounded-b-lg z-50 font-semibold;
+        background: var(--gold);
+        color: var(--dark-bg);
+    }
+
+    .skip-link:focus {
+        @apply top-0;
+    }
+}
+
+/* ===== Utilities ===== */
+@layer utilities {
+    .text-gold {
+        color: var(--gold);
+    }
+
+    .bg-gold {
+        background-color: var(--gold);
+    }
+
+    .border-gold {
+        border-color: var(--gold);
+    }
+
+    .gradient-text {
+        background: var(--gradient-gold);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .animate-on-scroll {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.animated {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
